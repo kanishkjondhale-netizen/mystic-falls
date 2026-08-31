@@ -8,36 +8,41 @@ One Node/Express app serves all four screens.
 
 ---
 
-## Links
+## Get a live link
 
-Replace `YOUR-DOMAIN` once the app is deployed. Until then, use the local
-addresses below.
+The app needs a server, so its address comes from deploying it. One click:
 
-| Screen | Live | Who |
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/kanishkjondhale-netizen/mystic-falls)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/kanishkjondhale-netizen/mystic-falls)
+
+Either one asks for the Turso URL, the Turso token and a staff password, then
+hands back an `https://…` address that works from anywhere — mobile data
+included — and never changes.
+
+**Pick a plan that does not sleep when idle.** The first customer to scan after
+a quiet hour would otherwise wait through a cold start, and that is exactly the
+moment it costs you an order.
+
+## The four screens
+
+Once deployed, everything hangs off that one address:
+
+| Screen | Path | Who |
 |---|---|---|
-| **Customer menu** | `https://YOUR-DOMAIN/?t=5` | Anyone — `?t=5` pre-fills table 5 |
-| **Admin** | `https://YOUR-DOMAIN/admin` | Staff password |
-| **Kitchen board** | `https://YOUR-DOMAIN/kitchen` | Staff password |
-| **Table QR codes** | `https://YOUR-DOMAIN/qr` | Staff — print from here |
-| Health check | `https://YOUR-DOMAIN/healthz` | Uptime monitoring |
+| **Customer menu** | `/?t=5` | Anyone — `?t=5` pre-fills table 5 |
+| **Admin** | `/admin` | Staff password |
+| **Kitchen board** | `/kitchen` | Staff password |
+| **Table QR codes** | `/qr` | Staff — print from here |
+| Health check | `/healthz` | Point an uptime monitor here |
 
-### Running on this machine
-
-| Screen | Local |
-|---|---|
-| Customer menu | http://localhost:3000/?t=5 |
-| Admin | http://localhost:3000/admin |
-| Kitchen | http://localhost:3000/kitchen |
-| QR codes | http://localhost:3000/qr |
-
-To open it from a phone on the same Wi-Fi, swap `localhost` for this computer's
-network address — `npm run qr` prints it, and `/qr` warns you if you are about
-to generate codes pointing at `localhost`, which scan to nothing on a phone.
-
-### Per-table links
-
-`/?t=1` … `/?t=9`, plus `/?t=takeaway`. The table number rides in the query
+Tables are `/?t=1` … `/?t=9`, plus `/?t=takeaway`. The number rides in the query
 string, so the kitchen always knows where an order goes.
+
+Then print the codes against the real address:
+
+```bash
+npm run qr -- https://your-live-address
+```
 
 ---
 
@@ -63,17 +68,29 @@ page at.
 
 ---
 
-## Setup
+## Before the first deploy
+
+The database has to exist. Run this once from your own machine — it creates the
+tables in Turso and loads the menu, and the same database then serves the
+deployed app.
 
 ```bash
 npm install
 cp .env.example .env
 npm run set-token          # paste the Turso token; it never hits your shell history
 npm run setup              # create the tables and load the 101-item menu
-npm start
 ```
 
-Then open http://localhost:3000
+`npm run setup` should report **18 sections, 101 items**. If it does not, the
+deploy will fail the same way, so fix it here first.
+
+## Running it on your own machine
+
+Only needed for development — customers never reach this.
+
+```bash
+npm start
+```
 
 ### Scripts
 
@@ -89,10 +106,11 @@ Then open http://localhost:3000
 
 ---
 
-## Deploying
+## Deploying by hand
 
-Any Node host. No build step, four runtime dependencies, nothing written to
-disk — an ephemeral filesystem is fine.
+The buttons above cover it, but any Node host works: no build step, four
+runtime dependencies, nothing written to disk — an ephemeral filesystem is
+fine.
 
 Set these in the host's environment. **Never upload `.env` itself.**
 

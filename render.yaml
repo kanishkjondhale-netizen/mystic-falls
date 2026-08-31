@@ -1,0 +1,30 @@
+# One-click deploy blueprint for Render.
+#
+# The secrets are declared with sync:false so Render asks for them at deploy
+# time rather than expecting them to live in the repository. Everything else
+# has a sane default.
+services:
+  - type: web
+    name: mystic-falls
+    runtime: node
+    plan: starter          # a free plan that sleeps is the wrong shape for a café
+    region: singapore      # closest Render region to Nanded
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: TURSO_DATABASE_URL
+        sync: false        # libsql://your-database.turso.io
+      - key: TURSO_AUTH_TOKEN
+        sync: false        # from the Turso dashboard
+      - key: STAFF_PASSWORD
+        sync: false        # opens /admin and /kitchen
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: TZ_OFFSET
+        value: "+05:30"    # so "today's takings" means an Indian day
+      - key: GST_PERCENT
+        value: "0"
+      - key: NODE_VERSION
+        value: "20"
