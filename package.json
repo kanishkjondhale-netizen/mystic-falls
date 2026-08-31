@@ -1,0 +1,29 @@
+{
+  "name": "mystic-falls-cafe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QR ordering system for 0125 Mystic Falls Cafe, Nanded",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "init-db": "node scripts/init-db.js",
+    "check-db": "node scripts/check-db.js",
+    "set-token": "node scripts/set-token.js",
+    "set-token:clipboard": "node scripts/set-token.js --clipboard",
+    "setup": "node scripts/init-db.js && node scripts/check-db.js",
+    "qr": "node scripts/make-qr.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

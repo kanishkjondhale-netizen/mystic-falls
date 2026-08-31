@@ -1,0 +1,13 @@
+node_modules
+*.log
+
+# Every env file is secret except the committed template.
+.env*
+!.env.example
+
+# Local SQLite used for offline testing.
+*.db
+
+# Generated table codes — rebuilt with `npm run qr` for whatever
+# address you are deploying to, so they do not belong in history.
+qr-codes/

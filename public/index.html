@@ -1,0 +1,2348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1A1918">
+<title>0125 My$tic Falls Cafe — Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Karla:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap">
+<script>
+/* Runs before first paint, so a saved palette never flashes the default one. */
+(function(){try{
+  var p=new URLSearchParams(location.search);
+  var q=p.get("theme");
+  var t=q!==null?q:(localStorage.getItem("mf_theme")||"");
+  if(t)document.documentElement.setAttribute("data-theme",t);
+  /* The font pair is applied properly further down, once FONTS is defined;
+     this only reserves the stylesheet so the text does not visibly reflow. */
+  var f=p.get("font"); f=f!==null?f:(localStorage.getItem("mf_font")||"");
+  var U={oswald:"Oswald:wght@500;600;700&family=Karla:wght@400;500;600;700",
+         playfair:"Playfair+Display:wght@600;700;800&family=Lato:wght@400;700;900",
+         anton:"Anton&family=Barlow:wght@400;500;600;700",
+         fraunces:"Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700",
+         archivo:"Archivo+Black&family=Archivo:wght@400;500;600;700"};
+  if(U[f]){var l=document.createElement("link");l.id="font-"+f;l.rel="stylesheet";
+    l.href="https://fonts.googleapis.com/css2?family="+U[f]+"&display=swap";
+    document.head.appendChild(l);}
+}catch(e){}})();
+</script>
+<script src="vendor/qrcode.min.js"></script>
+<style>
+/* Single visual world, by choice: the cafe's printed menu is black and gold.
+   Every colour is painted explicitly so the page holds on either host ground. */
+:root{
+  /* Nightfall. A blue-black ground rather than a neutral one — the whole page
+     should feel like dusk over water, not like a dark UI theme. Gold stays;
+     it is the café's, off the printed card. */
+  --ground:#0D1117; --surface:#151C25; --surface-2:#1E2733; --sunk:#080B10;
+  --line:#232E3B; --line-strong:#35434F;
+  --ink:#EEF2F7; --ink-2:#A3B0BF; --ink-3:#6C7B8B;
+  --gold:#E5BE63; --gold-hi:#FAE2A4; --gold-lo:#AC8630;
+  --amber:#E9A24C; --amber-hi:#F7C888;
+  --lime:#BFD46A;
+  --veg:#63C58C;
+  --mist:#8FB7C9;              /* the cold light in the haze */
+  --ok:#63C58C; --warn:#E9A24C; --crit:#E4675F;
+  --on-accent:#0E1219;                /* text and icons sitting on an accent fill */
+  --on-badge:#0E1219;                 /* the section badge's own lettering */
+  --amber-ink:#F7C888;                /* amber used AS TEXT on a pale tint, not as a fill */
+  --ground-rgb:13,17,23;              /* triplets for the translucent tints and scrims */
+  --accent-rgb:229,190,99; --amber-rgb:233,162,76; --lime-rgb:191,212,106;
+  --mist-rgb:143,183,201;
+  --shadow:0 1px 2px rgba(0,0,0,.55), 0 14px 34px rgba(0,0,0,.45);
+  --r:9px; --r-sm:6px;
+  /* Cinzel is inscriptional — carved rather than printed. It carries the name
+     and the section headings only; 101 dish names in Roman caps would be
+     miserable to scan, so those stay on the body face. */
+  --display:"Cinzel",Georgia,"Times New Roman",serif;
+  --body:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Share Tech Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+/* ---------- alternative palettes ----------------------------------------
+   Every colour in the app resolves through the tokens above, so a theme is
+   only ever a block of overrides. Set one with data-theme on <html>, or
+   ?theme=<name> in the URL. The default (no attribute) is Midnight Gold,
+   taken from the cafe's printed card. */
+
+/* Ivory & Gold — the daylight one. Same gold, read as ink on cream. */
+:root[data-theme="ivory"]{
+  --ground:#F7F2E8; --surface:#FFFFFF; --surface-2:#F1E9DA; --sunk:#EFE6D5;
+  --line:#E2D7C3; --line-strong:#C7B89C;
+  --ink:#241E19; --ink-2:#5C5147; --ink-3:#8A7C6C;
+  --gold:#8C6110; --gold-hi:#A87A20; --gold-lo:#73500B;
+  --amber:#D9822B; --amber-hi:#EFA45C; --amber-ink:#8A3E0A;
+  --lime:#54690E; --veg:#2F7134;
+  --ok:#2F7134; --warn:#8A3E0A; --crit:#B02A1D;
+  --on-accent:#FFFCF5;
+  --ground-rgb:247,242,232; --accent-rgb:140,97,16; --amber-rgb:217,130,43; --lime-rgb:84,105,14;
+  --shadow:0 1px 2px rgba(90,70,40,.10), 0 10px 30px rgba(90,70,40,.10);
+  color-scheme:light;
+}
+/* Plum & Rose Gold — the name is My$tic Falls, so: dusk, not daylight. */
+:root[data-theme="plum"]{
+  --ground:#191022; --surface:#231631; --surface-2:#2D1D3C; --sunk:#120B19;
+  --line:#3A2A4B; --line-strong:#4E3A62;
+  --ink:#F4EDF8; --ink-2:#BCACC9; --ink-3:#8B7A99;
+  --gold:#E3A695; --gold-hi:#F7CCBD; --gold-lo:#B87C6A;
+  --amber:#E4718D; --amber-hi:#F49DB2;
+  --lime:#C2A9F2; --veg:#5FC496;
+  --ok:#5FC496; --warn:#E4718D; --crit:#E4675F;
+  --on-accent:#1F1119;
+  --ground-rgb:25,16,34; --accent-rgb:227,166,149; --amber-rgb:228,113,141; --lime-rgb:194,169,242;
+}
+/* Forest & Brass — quieter, and the Pure Veg badge belongs in it. */
+:root[data-theme="forest"]{
+  --ground:#121A15; --surface:#1A2620; --surface-2:#22322A; --sunk:#0D1410;
+  --line:#2C3D33; --line-strong:#3E5246;
+  --ink:#EFF4EF; --ink-2:#A8B6AB; --ink-3:#77877B;
+  --gold:#C9A227; --gold-hi:#EAC85D; --gold-lo:#9A7A15;
+  --amber:#D68B2A; --amber-hi:#EDAC57;
+  --lime:#A8CC4A; --veg:#63C767;
+  --ok:#63C767; --warn:#D68B2A; --crit:#D9615A;
+  --on-accent:#101710;
+  --ground-rgb:18,26,21; --accent-rgb:201,162,39; --amber-rgb:214,139,42; --lime-rgb:168,204,74;
+}
+/* Charcoal & Ember — loudest of the set, aimed at a young evening crowd. */
+:root[data-theme="ember"]{
+  --ground:#131211; --surface:#1D1B19; --surface-2:#272422; --sunk:#0C0B0A;
+  --line:#332F2B; --line-strong:#4A433A;
+  --ink:#F8F5F1; --ink-2:#B0A99F; --ink-3:#7D766C;
+  --gold:#FF9E2C; --gold-hi:#FFC670; --gold-lo:#D2731A;
+  --amber:#FF5F4D; --amber-hi:#FF8F80;
+  --lime:#D8E84A; --veg:#5BBF5F;
+  --ok:#5BBF5F; --warn:#FF5F4D; --crit:#FF4438;
+  --on-accent:#1A1004;
+  --ground-rgb:19,18,17; --accent-rgb:255,158,44; --amber-rgb:255,95,77; --lime-rgb:216,232,74;
+}
+/* Indigo & Ice — the one that stops looking like a gold menu entirely. */
+:root[data-theme="indigo"]{
+  --ground:#101623; --surface:#1A2130; --surface-2:#232C3E; --sunk:#0A0F19;
+  --line:#2C3648; --line-strong:#3E4B61;
+  --ink:#EFF4FB; --ink-2:#A6B3C6; --ink-3:#74829B;
+  --gold:#6CC9E2; --gold-hi:#A2E0F1; --gold-lo:#3F9CB7;
+  --amber:#F0A868; --amber-hi:#F8C69A;
+  --lime:#8FE0C0; --veg:#5BC79A;
+  --ok:#5BC79A; --warn:#F0A868; --crit:#E4675F;
+  --on-accent:#07141B;
+  --ground-rgb:16,22,35; --accent-rgb:108,201,226; --amber-rgb:240,168,104; --lime-rgb:143,224,192;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:560px;margin:0 auto;min-height:100vh;position:relative}
+.wide{max-width:1240px}
+
+.goldtext{
+  background:linear-gradient(103deg,var(--gold-lo) 0%,var(--gold-hi) 34%,var(--gold) 58%,var(--gold-hi) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ---------- the falls: ambient haze behind everything ---------- */
+#mist{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+.app,.topbar,.rail,.cartbar,.masthead{position:relative;z-index:1}
+
+/* ---------- masthead ---------- */
+/* Scrolls away; the compact bar below it is what stays pinned. */
+.masthead{padding:44px 22px 30px;text-align:center;overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(var(--mist-rgb),.16), transparent 62%),
+    radial-gradient(90% 70% at 50% 120%, rgba(var(--accent-rgb),.10), transparent 68%);
+  border-bottom:1px solid var(--line)}
+/* The numeral leads. It is the half of the name nobody else has, so it gets
+   the size and the gradient; the words sit under it, quieter. */
+.crest-no{font-family:var(--display);font-size:clamp(52px,17vw,78px);font-weight:700;
+  letter-spacing:.16em;text-indent:.16em;line-height:.94;margin-bottom:2px}
+.crest-rule{display:flex;align-items:center;justify-content:center;gap:11px;margin:11px 0 13px}
+.crest-rule i{height:1px;width:52px;display:block;
+  background:linear-gradient(90deg,transparent,var(--gold-lo))}
+.crest-rule i+i{background:linear-gradient(90deg,var(--gold-lo),transparent)}
+.crest-rule svg{width:15px;height:15px;color:var(--gold);flex:none}
+.crest-name{font-family:var(--display);font-weight:600;line-height:1.05;text-transform:uppercase;
+  font-size:clamp(21px,6.6vw,30px);letter-spacing:.15em;text-indent:.15em;margin:0;
+  color:var(--gold-hi)}
+.crest-kind{font-family:var(--display);font-size:clamp(12px,3.4vw,15px);font-weight:600;
+  letter-spacing:.62em;text-indent:.62em;color:var(--ink-2);margin-top:9px}
+.crest-tag{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);
+  margin-top:16px;font-style:italic}
+.crest-meta{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:16px;flex-wrap:wrap}
+
+/* ---------- header ---------- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--sunk);border-bottom:1px solid var(--line)}
+/* A faint gold bloom behind the wordmark — depth without another border. */
+.topbar::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 150% at 8% -30%,rgba(var(--accent-rgb),.13),transparent 62%)}
+/* The full name lives on the crest above; this bar is the compact echo of it
+   that stays pinned, so it holds one line only. */
+.topbar-in{position:relative;display:flex;align-items:center;gap:10px;padding:9px 16px}
+.mark{min-width:0;flex:1}
+.logo{font-family:var(--display);font-weight:700;font-size:clamp(13px,3.9vw,17px);
+  letter-spacing:.09em;line-height:1.1;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{display:flex;align-items:center;gap:7px;margin-top:6px;min-width:0}
+.place{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+  white-space:nowrap}
+.topbar-in .chip{flex:none;padding:8px 12px;font-size:12px;min-height:38px}
+.topbar-in .iconbtn{width:38px;height:38px}
+.topbar-in .iconbtn svg{width:17px;height:17px}
+.pureveg{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--veg);white-space:nowrap;flex:none;
+  border:1px solid var(--veg);border-radius:3px;padding:1px 5px}
+.pureveg i{width:5px;height:5px;border-radius:50%;background:var(--veg);display:block}
+.hairline{height:2px;background:linear-gradient(90deg,transparent,var(--gold-lo),var(--gold-hi),var(--gold-lo),transparent);opacity:.55}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;min-height:38px;border-radius:100px;
+  border:1px solid var(--line-strong);background:var(--surface);font-size:12.5px;font-weight:600;
+  white-space:nowrap;transition:border-color .15s,color .15s}
+.chip:hover{border-color:var(--gold);color:var(--gold)}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:var(--on-accent)}
+.chip.on .dot{background:var(--on-accent)}
+
+/* ---------- category rail ---------- */
+.rail{position:sticky;top:var(--railtop,74px);z-index:30;background:var(--ground);
+  border-bottom:1px solid var(--line);padding:9px 0 8px}
+.rail-scroll{display:flex;gap:7px;overflow-x:auto;padding:0 18px;scrollbar-width:none}
+.rail-scroll::-webkit-scrollbar{display:none}
+.cat-pill{display:flex;align-items:center;padding:0 15px;min-height:38px;border-radius:100px;
+  font-size:12px;font-weight:700;color:var(--ink-2);background:transparent;white-space:nowrap;
+  transition:.18s;font-family:var(--body);letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--line-strong)}
+.cat-pill:hover{color:var(--gold);border-color:var(--gold-lo)}
+.cat-pill.active{background:var(--gold);border-color:var(--gold);color:var(--on-accent);
+  box-shadow:0 0 18px rgba(var(--accent-rgb),.22)}
+
+/* ---------- search ---------- */
+.iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-strong);
+  background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;
+  color:var(--ink-2);transition:border-color .15s,color .15s}
+.iconbtn:hover{border-color:var(--gold);color:var(--gold)}
+.iconbtn svg{width:17px;height:17px}
+.searchbar{display:flex;align-items:center;gap:9px;margin-top:6px;padding:11px 13px;
+  border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--sunk)}
+.searchbar:focus-within{border-color:var(--gold)}
+.searchbar svg{width:17px;height:17px;color:var(--ink-3);flex:none}
+.searchbar input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:inherit;font-size:15px}
+.searchbar input:focus{outline:none}
+.searchbar input::placeholder{color:var(--ink-3)}
+.qclear{color:var(--ink-3);font-size:15px;flex:none;width:38px;height:38px;margin:-8px -10px -8px 0;
+  display:flex;align-items:center;justify-content:center}
+.qhint{font-size:12px;color:var(--ink-3);margin:12px 0 0}
+.qsec{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);margin:16px 0 -4px}
+.qmark{color:var(--gold);font-style:normal}
+
+/* ---------- sections ---------- */
+.sec{padding:24px 18px 2px;scroll-margin-top:var(--stickyh,126px)}
+/* Engraved, not stuck-on: the section name sits on a hairline that runs the
+   width of the column, with a small mark at each end. Replaces a skewed
+   orange pill that could have belonged to any takeaway app. */
+.badge{display:flex;align-items:center;gap:13px;position:relative;padding:0;background:none;
+  box-shadow:none;transform:none;border-radius:0}
+.badge span{font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-hi);text-indent:.28em;white-space:nowrap;flex:none}
+.badge::before,.badge::after{content:"";height:1px;position:static;width:auto;border-radius:0;
+  background:linear-gradient(90deg,var(--gold-lo),transparent);opacity:.7;top:auto;bottom:auto}
+.badge::before{flex:0 0 16px;background:linear-gradient(90deg,transparent,var(--gold-lo))}
+.badge::after{flex:1}
+.sec-note{font-size:11.5px;color:var(--ink-3);margin:10px 0 0;letter-spacing:.09em;
+  text-transform:uppercase}
+.items{margin-top:12px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 0;
+  border-bottom:1px dotted var(--line-strong)}
+.row:last-child{border-bottom:0}
+.r-main{flex:1;min-width:0}
+/* Dish names stay on the body face. Roman caps are beautiful on a crest and
+   punishing across a hundred list rows. */
+.r-name{font-size:15px;font-weight:700;letter-spacing:.045em;text-transform:uppercase;
+  font-family:var(--body);line-height:1.22;color:var(--ink)}
+.r-qual{font-size:11px;color:var(--ink-3);margin-left:5px;text-transform:none;letter-spacing:.02em}
+/* One line on how it tastes and how it turns up. Sentence case on purpose --
+   the dish names are uppercase display type, so this has to read as a
+   different voice or the row turns into a wall of caps. */
+.r-desc{font-family:var(--body);font-size:12px;font-weight:400;line-height:1.4;
+  color:var(--ink-3);margin-top:4px;text-transform:none;letter-spacing:.005em;max-width:54ch}
+/* On a plain row the description spans the whole width underneath, rather
+   than squeezing into the narrow name column beside the price and button --
+   that turned nearly every line into two. Indented to sit under the name. */
+.row > .r-desc{flex-basis:100%;margin-left:46px;margin-top:1px}
+.r-price{font-family:var(--body);font-weight:700;font-size:15px;color:var(--gold);flex:none;
+  min-width:44px;text-align:right}
+/* A dish already in the order reads differently at a glance. */
+.row.incart .r-ico{border-color:var(--gold-lo);color:var(--gold-hi);background:rgba(var(--accent-rgb),.1)}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;background:rgba(var(--lime-rgb),.14);color:var(--lime);margin-left:7px;
+  vertical-align:2px;font-family:var(--body)}
+/* Thumb-sized. Both sit at 40px tall and the same width, so the row does not
+   jump when Add turns into a stepper. */
+.add{border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:7px 12px;font-size:12.5px;
+  font-weight:700;color:var(--gold);flex:none;min-width:76px;min-height:40px;text-align:center;
+  transition:.15s;letter-spacing:.05em;text-transform:uppercase}
+.add:hover{border-color:var(--gold);background:rgba(var(--accent-rgb),.09)}
+.add:active{transform:scale(.94)}
+.step{display:flex;align-items:center;border-radius:var(--r-sm);flex:none;min-width:76px;min-height:40px;
+  overflow:hidden;background:linear-gradient(100deg,var(--gold-lo),var(--gold));color:var(--on-accent)}
+.step button{width:28px;height:40px;font-size:18px;font-weight:700;line-height:1;color:inherit}
+.step button:hover{background:rgba(0,0,0,.14)}
+.step span{flex:1;text-align:center;font-size:14px;font-weight:700}
+
+/* Sized items (pizza). Three across, not three stacked — the size chips used
+   to wrap one-per-line, which turned 15 pizzas into a very long scroll. */
+.sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}
+.size{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:6px 4px;min-height:44px;
+  font-size:12px;font-weight:600;transition:.15s;background:var(--surface)}
+.size:hover{border-color:var(--gold)}
+.size:active{transform:scale(.96)}
+.size b{color:var(--gold);font-weight:700;font-size:13px;line-height:1.15}
+.size i{font-style:normal;color:var(--ink-3);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  line-height:1.15}
+.size.picked{border-color:var(--gold);background:rgba(var(--accent-rgb),.12);padding-bottom:5px}
+.size.picked i{color:var(--gold-hi)}
+/* A chosen size turns into its own stepper, so a quantity can come back down
+   without clearing the whole dish. */
+.sizestep{display:flex;align-items:center;margin-top:5px;border-radius:5px;overflow:hidden;
+  background:linear-gradient(100deg,var(--gold-lo),var(--gold));color:var(--on-accent);
+  width:100%;max-width:96px}
+.sizestep button{flex:none;width:30px;height:32px;font-size:17px;font-weight:700;line-height:1;
+  color:inherit;display:flex;align-items:center;justify-content:center}
+.sizestep button:hover{background:rgba(0,0,0,.15)}
+.sizestep span{flex:1;text-align:center;font-size:13.5px;font-weight:700;
+  font-variant-numeric:tabular-nums}
+.size.clearall{grid-column:1/-1;flex-direction:row;min-height:38px;padding:6px;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:none;border-style:dashed}
+
+/* ---------- cart ---------- */
+.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  padding:12px 14px calc(12px + env(safe-area-inset-bottom));pointer-events:none;
+  transform:translateY(140%);transition:transform .28s cubic-bezier(.2,.8,.3,1)}
+.cartbar.show{transform:none}
+.cartbar-in{pointer-events:auto;width:100%;max-width:532px;border-radius:var(--r);
+  background:linear-gradient(100deg,var(--gold-lo),var(--gold) 45%,var(--gold-hi));color:var(--on-accent);
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;padding:13px 18px;font-weight:700}
+.cartbar-in small{display:block;font-size:10.5px;font-weight:700;opacity:.66;letter-spacing:.11em;
+  text-transform:uppercase;margin-bottom:1px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.66);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--surface);
+  border-top:1px solid var(--line-strong);border-radius:14px 14px 0 0;box-shadow:0 -8px 44px rgba(0,0,0,.7);
+  max-height:88vh;overflow:auto;transform:translateY(100%);visibility:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1), visibility 0s linear .3s;
+  max-width:560px;margin:0 auto;padding-bottom:env(safe-area-inset-bottom)}
+.sheet.show{transform:none;visibility:visible;transition-delay:0s}
+.sheet-head{position:sticky;top:0;background:var(--surface);padding:17px 20px 12px;
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;z-index:2}
+.sheet-title{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;flex:1}
+.x{width:38px;height:38px;border-radius:50%;background:var(--surface-2);font-size:15px;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.sheet-body{padding:4px 20px 20px}
+.line{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px dotted var(--line-strong)}
+.line-name{flex:1;min-width:0;font-size:14px;font-weight:600;line-height:1.25}
+.line-name small{display:block;font-weight:400;color:var(--ink-3);font-size:11.5px;margin-top:2px}
+.line-amt{font-weight:700;font-size:14px;min-width:52px;text-align:right;color:var(--gold)}
+.bill{margin-top:16px;padding:14px 16px;background:var(--sunk);border-radius:var(--r);
+  border:1px solid var(--line);font-size:13.5px}
+.bill div{display:flex;justify-content:space-between;padding:4px 0;color:var(--ink-2)}
+.bill div.total{color:var(--ink);font-weight:700;font-size:17px;border-top:1px solid var(--line);
+  margin-top:8px;padding-top:11px}
+/* With GST at 0 there is no subtotal line above it, so the rule would be
+   floating over empty space. */
+.bill div.total:first-child{border-top:0;margin-top:0;padding-top:4px}
+.bill div.total span:last-child{color:var(--gold)}
+.field{width:100%;margin-top:14px;padding:11px 13px;border:1px solid var(--line-strong);
+  border-radius:var(--r-sm);background:var(--sunk);color:var(--ink);font:inherit;font-size:14px;
+  resize:vertical;min-height:44px}
+.field::placeholder{color:var(--ink-3)}
+.btn{display:block;width:100%;margin-top:14px;padding:15px;border-radius:var(--r);
+  background:linear-gradient(100deg,var(--gold-lo),var(--gold) 45%,var(--gold-hi));color:var(--on-accent);
+  font-weight:700;font-size:14px;text-align:center;letter-spacing:.06em;text-transform:uppercase;
+  transition:filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--ink-2);border:1px solid var(--line-strong)}
+.tables{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.tbl{padding:14px 0;border:1px solid var(--line-strong);border-radius:var(--r-sm);text-align:center;
+  font-weight:700;font-size:15px;transition:.15s;background:var(--sunk)}
+.tbl:hover{border-color:var(--gold)}
+.tbl.on{background:var(--gold);border-color:var(--gold);color:var(--on-accent)}
+.tbl.wide-btn{grid-column:span 4;font-size:13px;padding:12px 0}
+
+/* ---------- order status ---------- */
+.status-wrap{padding:32px 22px 60px;text-align:center}
+.status-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;
+  font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  background:rgba(var(--accent-rgb),.13);color:var(--gold)}
+.pulse{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.status-h{font-family:var(--display);font-weight:700;font-size:29px;line-height:1.14;margin:16px 0 8px;
+  text-wrap:balance;letter-spacing:.01em}
+.status-p{color:var(--ink-2);font-size:14px;max-width:34ch;margin:0 auto}
+.track{display:flex;margin:28px 0 8px;text-align:left}
+.track-step{flex:1;position:relative;padding-top:20px;font-size:10.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.track-step::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--line);border-radius:2px}
+.track-step+.track-step::before{left:3px}
+.track-step.done{color:var(--gold)}
+.track-step.done::before{background:linear-gradient(90deg,var(--gold-lo),var(--gold))}
+.receipt{margin-top:24px;text-align:left;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.receipt h3{font-family:var(--display);font-size:17px;margin:0 0 3px;letter-spacing:.06em;text-transform:uppercase}
+.rmeta{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+
+/* ---------- kitchen ---------- */
+.kit-top{position:sticky;top:0;z-index:20;background:var(--sunk);border-bottom:1px solid var(--line);
+  padding:15px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.kit-title{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;flex:1}
+.kit-stat{font-size:11.5px;color:var(--ink-2);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.kit-stat b{color:var(--gold);font-size:16px;margin-right:4px;font-family:var(--body)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:20px 22px 60px;align-items:start}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.col-head{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);margin-bottom:10px;font-family:var(--display)}
+.col-count{background:var(--surface-2);border-radius:100px;padding:1px 8px;font-size:11px;font-family:var(--body)}
+.col-list{display:flex;flex-direction:column;gap:12px}
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden}
+.ticket-top{display:flex;align-items:baseline;gap:8px;padding:11px 14px 8px;border-bottom:1px dashed var(--line-strong)}
+.t-table{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase}
+.t-no{font-family:var(--mono);font-size:12px;color:var(--ink-3);flex:1}
+.t-age{font-size:11.5px;font-weight:600;color:var(--ink-2)}
+.t-age.late{color:var(--crit)}
+.ticket-items{padding:11px 14px;font-family:var(--mono);font-size:13.5px;display:flex;flex-direction:column;gap:5px}
+.ti{display:flex;gap:10px}
+.ti b{min-width:26px;color:var(--gold)}
+.ti span{flex:1}
+.t-note{margin:0 14px 11px;padding:8px 10px;background:rgba(var(--amber-rgb),.12);color:var(--amber-ink);
+  border-radius:var(--r-sm);font-size:12px;font-weight:600}
+.ticket-foot{display:flex;gap:8px;padding:11px 14px;border-top:1px solid var(--line);background:var(--sunk)}
+.tbtn{flex:1;padding:9px;border-radius:var(--r-sm);font-size:11.5px;font-weight:700;text-align:center;
+  letter-spacing:.08em;text-transform:uppercase;
+  background:linear-gradient(100deg,var(--gold-lo),var(--gold));color:var(--on-accent)}
+.tbtn.sec{background:none;border:1px solid var(--line-strong);color:var(--ink-2);flex:0 0 auto;padding:9px 12px}
+/* A chime alone is easy to miss over an extractor fan, so a ticket that has
+   just landed also announces itself for a few seconds. */
+.ticket.justin{border-color:var(--amber);animation:justin 1.1s ease-out 9}
+@keyframes justin{
+  0%,100%{box-shadow:var(--shadow)}
+  50%{box-shadow:0 0 0 3px rgba(var(--amber-rgb),.5), var(--shadow)}
+}
+.chip.soundwarn{border-color:var(--amber);color:var(--amber)}
+@media (prefers-reduced-motion:reduce){
+  .ticket.justin{animation:none;box-shadow:0 0 0 3px rgba(var(--amber-rgb),.5), var(--shadow)}
+}
+.empty{padding:24px 14px;border:1px dashed var(--line-strong);border-radius:var(--r);text-align:center;
+  color:var(--ink-3);font-size:13px}
+.stripe{height:3px}
+.stripe.new{background:linear-gradient(90deg,var(--amber),var(--amber-hi))}
+.stripe.prep{background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi))}
+.stripe.done{background:var(--line-strong)}
+
+/* ---------- qr ---------- */
+.qr-top{padding:24px 22px 6px}
+.qr-h{font-family:var(--display);font-weight:700;font-size:23px;letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:6px}
+.qr-p{color:var(--ink-2);font-size:14px;max-width:62ch}
+.qr-ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 22px;border-bottom:1px solid var(--line)}
+.qr-ctl label{font-size:11.5px;font-weight:700;color:var(--ink-2);letter-spacing:.1em;text-transform:uppercase}
+.qr-ctl input{width:70px;padding:8px 10px;border:1px solid var(--line-strong);border-radius:var(--r-sm);
+  background:var(--sunk);color:var(--ink);font:inherit}
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:16px;padding:20px 22px 60px}
+.card{background:var(--sunk);color:var(--ink);border:1px solid var(--line-strong);border-radius:var(--r);
+  padding:18px 16px 15px;text-align:center}
+.card .cn{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.07em;
+  text-transform:uppercase;line-height:1.25}
+.card .ct{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin:5px 0 12px}
+.card .qbox{display:flex;justify-content:center;padding:9px;background:#fff;border-radius:5px;width:fit-content;margin:0 auto}
+.card .cnum{font-family:var(--display);font-weight:700;font-size:22px;margin-top:12px;letter-spacing:.06em;
+  text-transform:uppercase}
+.card .cinst{font-size:10.5px;color:var(--ink-3);margin-top:3px;letter-spacing:.04em}
+
+/* ---------- waiter calls ---------- */
+.iconbtn.waiting{border-color:var(--amber);color:var(--amber)}
+.buzz-big{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:16px;
+  padding:16px;border-radius:var(--r);border:1px solid var(--gold-lo);
+  background:rgba(var(--accent-rgb),.08);color:var(--gold);font-weight:700;font-size:13.5px;
+  letter-spacing:.12em;text-transform:uppercase;transition:.15s}
+.buzz-big:hover{border-color:var(--gold);background:rgba(var(--accent-rgb),.14)}
+.buzz-big svg{width:19px;height:19px;flex:none}
+.buzz-big.waiting{border-color:var(--amber);color:var(--amber);background:rgba(var(--amber-rgb),.1);
+  cursor:default}
+/* Staff side: sits above everything, and stays there until someone clears it. */
+.calls{display:flex;flex-direction:column;gap:8px;padding:12px 22px 0}
+.call{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:var(--r);
+  border:1px solid var(--amber);background:rgba(var(--amber-rgb),.12);
+  animation:callpulse 1.6s ease-in-out infinite}
+.call svg{width:19px;height:19px;color:var(--amber);flex:none}
+.call-table{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink)}
+.call-age{font-size:12px;color:var(--ink-2);margin-left:auto}
+.call.late{border-color:var(--crit)}
+.call.late .call-age{color:var(--crit);font-weight:700}
+.call-ack{padding:8px 14px;border-radius:var(--r-sm);min-height:38px;background:var(--amber);
+  color:var(--on-accent);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+@keyframes callpulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--amber-rgb),.35)}
+                     50%{box-shadow:0 0 0 5px rgba(var(--amber-rgb),0)}}
+@media (prefers-reduced-motion:reduce){.call{animation:none}}
+
+/* ---------- admin: orders & history ---------- */
+.tabs{display:flex;gap:8px;padding:14px 22px 0}
+.tab{padding:8px 15px;border-radius:100px;border:1px solid var(--line-strong);font-size:12px;
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-family:var(--display)}
+.tab.on{background:var(--gold);border-color:var(--gold);color:var(--on-accent)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(116px,1fr));gap:9px;padding:14px 22px 0}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px}
+.tile b{display:block;font-size:19px;font-weight:700;color:var(--gold);line-height:1.2;
+  font-variant-numeric:tabular-nums}
+.tile span{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.tile.due b{color:var(--warn)}
+.filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;padding:14px 22px 0}
+.filters .searchbar{margin-top:0;flex:1;min-width:170px;padding:8px 11px}
+.filters .searchbar input{font-size:13.5px}
+.ordlist{display:flex;flex-direction:column;gap:10px;padding:14px 22px 90px}
+.ord{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.ord.due{border-color:rgba(var(--amber-rgb),.45)}
+.ord-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.ord-table{font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:.05em;text-transform:uppercase}
+.ord-no{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.ord-when{margin-left:auto;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.ord-items{font-size:13px;color:var(--ink-2);margin:8px 0 0;line-height:1.5}
+.ord-phone{font-size:11.5px;color:var(--ink-3);margin-top:4px;letter-spacing:.03em}
+.ord-foot{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px;padding-top:10px;
+  border-top:1px dashed var(--line-strong)}
+.ord-total{font-weight:700;color:var(--gold);font-size:15.5px;font-variant-numeric:tabular-nums;margin-right:auto}
+.pill{font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;padding:3px 8px;
+  border-radius:100px;border:1px solid var(--line-strong);color:var(--ink-3)}
+.pill.placed{color:var(--amber);border-color:rgba(var(--amber-rgb),.5)}
+.pill.preparing{color:var(--gold);border-color:rgba(var(--accent-rgb),.5)}
+.pill.served{color:var(--ok);border-color:var(--ok)}
+.pill.awaiting{color:var(--crit);border-color:var(--crit)}
+.ord.abandoned{opacity:.72;border-style:dashed;border-color:var(--line-strong)}
+.paybtn{font-size:11px;font-weight:700;letter-spacing:.06em;padding:6px 11px;border-radius:var(--r-sm);
+  border:1px solid var(--line-strong);color:var(--ink-2);transition:.15s}
+.paybtn:hover{border-color:var(--gold);color:var(--gold)}
+.paybtn.on{background:var(--gold);border-color:var(--gold);color:var(--on-accent)}
+.paid{font-size:11px;color:var(--ok);font-weight:600;letter-spacing:.04em}
+.splitrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px;padding-top:10px;
+  border-top:1px dashed var(--line-strong)}
+.splitrow label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.splitrow input{width:92px;padding:8px 10px;border:1px solid var(--gold-lo);border-radius:var(--r-sm);
+  background:var(--sunk);color:var(--gold);font:inherit;font-weight:700;font-size:14px;
+  text-align:right;font-variant-numeric:tabular-nums}
+.splitrow input:focus{outline:none;border-color:var(--gold)}
+.splitrest{font-size:12.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.more{margin:0 22px 90px;padding:12px;border:1px dashed var(--line-strong);border-radius:var(--r);
+  text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-2);width:calc(100% - 44px)}
+
+.foot{padding:26px 20px 120px;text-align:center;font-size:12px;color:var(--ink-3);line-height:1.9}
+.foot b{color:var(--ink-2);font-weight:600}
+.foot a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(var(--accent-rgb),.35);padding-bottom:1px}
+.foot .divider{height:1px;background:var(--line);margin:0 auto 18px;max-width:120px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,12px);z-index:80;background:var(--gold);
+  color:var(--on-accent);padding:10px 16px;border-radius:100px;font-size:13px;font-weight:700;opacity:0;
+  pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+/* Palette picker. Only rendered with ?themes=1, so customers never see it.
+   Deliberately fixed colours: it has to stay legible on every palette. */
+.themebar{position:fixed;left:0;right:0;bottom:0;z-index:200;display:flex;flex-direction:column;gap:6px;
+  padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(8,8,8,.93);border-top:1px solid #3A3A3A;backdrop-filter:blur(8px)}
+.themebar .tbrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center}
+.themebar .tblabel{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8A8A8A;
+  margin-right:2px;min-width:52px;text-align:right}
+.themebar button{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:100px;
+  border:1px solid #4A4A4A;background:#181818;color:#E8E8E8;font-size:11.5px;font-weight:600;
+  letter-spacing:.02em}
+.themebar button.on{border-color:#FFF;background:#2A2A2A}
+.themebar button i{width:11px;height:11px;border-radius:50%;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.themebar .sw{display:flex;gap:3px}
+@media print{.themebar{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  .qr-top,.qr-ctl,.hint,.foot{display:none}
+  .master{border:1px dashed #999;background:#fff;color:#111;margin:0 0 12px}
+  .master-txt h2{color:#111!important;-webkit-text-fill-color:#111}
+  .master-txt p{color:#444}
+  .master-actions{display:none}
+  body,.app{background:#fff}
+  .qr-grid{grid-template-columns:repeat(3,1fr);padding:0;gap:10px}
+  .card{break-inside:avoid;background:#fff;color:#111;border:1px dashed #999}
+  .card .ct,.card .cinst{color:#777}
+}
+.hint{font-size:12px;color:var(--ink-3);padding:0 22px 26px}
+.qrwarn{margin:16px 22px 0;padding:13px 16px;border-radius:var(--r);border:1px solid var(--crit);
+  background:rgba(228,103,95,.12);font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.qrwarn b{display:block;color:var(--crit);margin-bottom:4px;font-size:14px}
+.qrwarn code{background:rgba(var(--ground-rgb),.5);color:var(--ink);padding:1px 5px;border-radius:4px;
+  font-family:var(--mono);font-size:.92em}
+@media print{.qrwarn{display:none}}
+.pxwrap{display:flex;gap:6px;flex:none}
+.pxin{width:66px;padding:7px 8px;border:1px solid var(--line-strong);border-radius:var(--r-sm);
+  background:var(--sunk);color:var(--gold);font:inherit;font-weight:700;font-size:13px;text-align:right}
+.pxin:focus{outline:none;border-color:var(--gold)}
+.pxin.saved{border-color:var(--ok)}
+/* ---------- dish imagery ---------- */
+.hero{position:relative;height:140px;border-radius:10px;overflow:hidden;border:1px solid var(--line);
+  background:var(--surface)}
+.hero picture{display:block;width:100%;height:100%}
+.hero img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(1.06) contrast(1.03)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(125% 105% at 50% 0%,transparent 38%,rgba(var(--ground-rgb),.55) 100%),
+             linear-gradient(180deg,rgba(var(--ground-rgb),.05) 0%,rgba(var(--ground-rgb),.42) 52%,rgba(var(--ground-rgb),.94) 100%)}
+.hero.glyphpanel{display:flex;align-items:center;justify-content:center;height:96px;
+  background:repeating-linear-gradient(135deg,rgba(var(--accent-rgb),.055) 0 2px,transparent 2px 10px),var(--surface)}
+.hero.glyphpanel svg{width:46px;height:46px;color:rgba(var(--accent-rgb),.5);position:relative;z-index:1}
+.hero.glyphpanel::after{background:linear-gradient(180deg,transparent 40%,rgba(var(--ground-rgb),.9) 100%)}
+.sec .badge{position:relative;z-index:2;margin-top:-19px;margin-left:8px}
+.r-ico{width:34px;height:34px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;flex:none;color:var(--gold)}
+.r-ico svg{width:19px;height:19px}
+.row.sizedrow{display:flex;align-items:flex-start;gap:12px}
+.row.sizedrow .r-ico{margin-top:2px}
+/* On a 320px screen the fixed price and button columns squeezed the dish name
+   down to 94px, and names like "Paneer Manchurian (10 pc)" spilled over the
+   price. The dish glyph is the least load-bearing thing in the row -- the
+   section photo already says what you are looking at -- so it goes first. */
+/* Phone held sideways: the sticky header and rail were taking 40% of the
+   screen, leaving very little menu. */
+@media (max-height:430px) and (orientation:landscape){
+  .topbar-in{padding:7px 16px 6px}
+  .logo{font-size:16px}
+  .sub{margin-top:4px}
+  .hero{height:92px}
+  .rail{padding:6px 0 5px}
+}
+@media (max-width:359px){
+  .sec{padding-left:14px;padding-right:14px}
+  .r-ico{display:none}
+  .row > .r-desc{margin-left:0}
+  .r-name{font-size:14px}
+  .r-price{min-width:40px}
+}
+
+/* ---------- phone / otp ---------- */
+.phone-field{display:flex;align-items:center;gap:0;margin-top:14px;border:1px solid var(--line-strong);
+  border-radius:var(--r-sm);background:var(--sunk);overflow:hidden}
+.phone-field .cc{padding:12px 12px;font-weight:700;color:var(--ink-2);font-size:15px;
+  border-right:1px solid var(--line-strong);background:var(--surface-2)}
+.phone-field input{flex:1;padding:12px 13px;border:0;background:none;color:var(--ink);font:inherit;
+  font-size:17px;letter-spacing:.13em;font-variant-numeric:tabular-nums}
+.phone-field input:focus{outline:none}
+.otp-input{width:100%;margin-top:16px;padding:14px;border:1px solid var(--line-strong);border-radius:var(--r-sm);
+  background:var(--sunk);color:var(--ink);font:inherit;font-size:26px;font-weight:700;text-align:center;
+  letter-spacing:.5em;text-indent:.5em;font-variant-numeric:tabular-nums}
+.otp-input:focus{outline:none;border-color:var(--gold)}
+.demo{margin-top:14px;padding:12px 14px;border:1px dashed var(--amber);border-radius:var(--r-sm);
+  background:rgba(var(--amber-rgb),.08);font-size:12.5px;color:var(--amber-ink);line-height:1.55}
+.demo b{font-size:19px;letter-spacing:.28em;color:var(--ink);display:block;margin-top:5px;
+  font-variant-numeric:tabular-nums}
+.muted{font-size:12.5px;color:var(--ink-3);margin-top:10px;line-height:1.6}
+/* "change number" and "resend code" get tapped precisely when something has
+   gone wrong, so the hit area is padded out to a thumb without moving the
+   text: the negative margin cancels the padding for layout. */
+.linkbtn{background:none;color:var(--gold);font-size:12.5px;font-weight:600;
+  padding:10px 6px;margin:-10px -6px;text-decoration:underline;text-underline-offset:3px}
+.linkbtn[disabled]{color:var(--ink-3);text-decoration:none;cursor:default}
+.verified{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ok);
+  letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- master qr ---------- */
+.master{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:20px 22px 4px;padding:22px;
+  border:1px solid var(--line-strong);border-radius:12px;background:var(--surface)}
+.master .qbig{background:#fff;padding:14px;border-radius:10px;line-height:0;flex:none}
+.master-txt{flex:1;min-width:230px}
+.master-txt h2{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.07em;
+  text-transform:uppercase;margin:0 0 7px}
+.master-txt p{color:var(--ink-2);font-size:13.5px;margin:0 0 14px;max-width:46ch}
+.master-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+</style>
+
+</head>
+<body>
+<canvas id="mist" aria-hidden="true"></canvas>
+<div id="root"></div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CAFE ============ */
+const CAFE = {
+  code:"0125", name:"MY$TIC FALLS", kind:"CAFÉ",
+  place:"Anand Nagar, Nanded",
+  insta:"@0125_MYSTIC_FALLS",
+  wifi:"Nyc@0125"
+};
+/* line glyphs, 24x24, stroke-based — one per dish family */
+const G = {
+ cup:'<path d="M4.5 7.5h11.5v6.2a4.3 4.3 0 0 1-4.3 4.3H8.8a4.3 4.3 0 0 1-4.3-4.3V7.5Z"/><path d="M16 9h2.4a2.4 2.4 0 0 1 0 4.8H16"/><path d="M7.6 2.6v2.2M11.6 2.6v2.2"/><path d="M3 21h15"/>',
+ shake:'<path d="M6.8 7.4h10.4l-1.15 11.9a2 2 0 0 1-2 1.8h-4.1a2 2 0 0 1-2-1.8L6.8 7.4Z"/><path d="M6.3 7.4c1.6-2.6 9.8-2.6 11.4 0"/><path d="M15.4 2.6 13.6 6.4"/>',
+ mojito:'<path d="M3.8 5.4h16.4l-7.2 8.6V20"/><path d="M9.2 20h7.2"/><path d="M18.4 2.4 14.6 5.4"/><circle cx="18.8" cy="2.1" r="1.5"/>',
+ pizza:'<path d="M12 2.9 3.6 18.2a13.2 13.2 0 0 0 16.8 0L12 2.9Z"/><path d="M5.9 14.6a11 11 0 0 0 12.2 0"/><circle cx="10.2" cy="10.4" r="1.02"/><circle cx="13.9" cy="13" r="1.02"/><circle cx="10" cy="15.4" r="1.02"/>',
+ burger:'<path d="M3.6 8.6c0-3 3.8-5.2 8.4-5.2s8.4 2.2 8.4 5.2"/><path d="M3.6 8.6h16.8"/><path d="M4 12.2h16"/><path d="M3.6 15.6h16.8a4 4 0 0 1-4 4H7.6a4 4 0 0 1-4-4Z"/>',
+ fries:'<path d="M6 9.6h12l-1.1 9.2a2 2 0 0 1-2 1.8H9.1a2 2 0 0 1-2-1.8L6 9.6Z"/><path d="M8.6 9.4 8 3.6M12 9.4V3M15.4 9.4 16 3.6"/><path d="M6.6 13.2h10.8"/>',
+ sandwich:'<path d="M2.6 15.4 12 7.2l9.4 8.2"/><path d="M2.6 15.4h18.8l-3 4.2H5.6l-3-4.2Z"/><path d="M8 11.6l2.4 2M13 9.4l2.6 2.3"/>',
+ baked:'<path d="M3.4 12.4c0-3.4 3.8-6.2 8.6-6.2s8.6 2.8 8.6 6.2v3.4a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2v-3.4Z"/><path d="M6.6 11.4c1.6-1.2 3.2-1.2 4.8 0s3.2 1.2 4.8 0"/><path d="M3.4 21h17.2"/>',
+ pasta:'<path d="M3.2 11.6h17.6a8.8 8.8 0 0 1-8.8 8.8 8.8 8.8 0 0 1-8.8-8.8Z"/><path d="M7 8.6c0-2.6 1.4-4.2 2.6-4.2M11.4 8.6c0-3.4 1.6-5 3-5M15.8 8.6c0-2.4 1.2-3.8 2.4-3.8"/>',
+ twister:'<path d="M8.6 2.8c4.4 1.2 6.4 3.4 6.4 6.4s-4 3.6-4 6.2 2.2 4 4.6 4.6"/><path d="M6.2 6.2c3 .8 4.4 2.2 4.4 4M9.4 12.6c-2.4.6-3.6 1.8-3.6 3.4s1.4 2.8 3.4 3.4"/>',
+ noodle:'<path d="M3 11.4h18a9 9 0 0 1-9 9 9 9 0 0 1-9-9Z"/><path d="M14.4 3.2 9.6 10.6M17.6 4.6l-4 6"/><path d="M6.6 8.6c0-2.2 1-3.4 2-3.4M10.6 8.4c0-2.8 1.2-4.2 2.2-4.2" opacity=".55"/>',
+ momo:'<path d="M3.4 18.4c0-4.8 3.9-8.6 8.6-8.6s8.6 3.8 8.6 8.6H3.4Z"/><path d="M7.2 18.4c0-3.6 2.2-6.4 4.8-6.4s4.8 2.8 4.8 6.4"/><path d="M12 9.8V6.4M9 10.6 7.6 7.4M15 10.6l1.4-3.2"/>',
+ balls:'<circle cx="8.2" cy="9.4" r="2.9"/><circle cx="15.6" cy="8.6" r="2.7"/><circle cx="12" cy="14.4" r="2.9"/><path d="M2.8 18.4h18.4a4 4 0 0 1-4 2.8H6.8a4 4 0 0 1-4-2.8Z"/>',
+ cube:'<path d="M12 2.8 20.4 7 12 11.2 3.6 7 12 2.8Z"/><path d="M3.6 7v9.8L12 21v-9.8"/><path d="M20.4 7v9.8L12 21"/>',
+ rice:'<path d="M3.2 12.2h17.6a8.8 8.8 0 0 1-8.8 8.8 8.8 8.8 0 0 1-8.8-8.8Z"/><path d="M8 9.2c.9-1 2-1 2.9 0M13.2 8.4c.9-1 2-1 2.9 0M10.4 6c.9-1 2-1 2.9 0"/>',
+ soup:'<path d="M3.4 11.8h17.2a8.6 8.6 0 0 1-8.6 8.6 8.6 8.6 0 0 1-8.6-8.6Z"/><path d="M1.8 11.8h20.4"/><path d="M8.6 8.2c0-1.6 1.4-1.8 1.4-3.4M13.4 8.2c0-1.6 1.4-1.8 1.4-3.4"/>',
+ icecream:'<path d="M4.6 8.6h14.8l-5.6 7.2v4.4"/><path d="M9.6 20.2h5"/><path d="M5.6 8.6c1.2-3 3.6-4.6 6.4-4.6s5.2 1.6 6.4 4.6"/><circle cx="9.6" cy="6.2" r="1.05"/><circle cx="14" cy="6" r="1.05"/>'
+};
+const SEC_GLYPH = { coffee:"cup", shakes:"shake", mojito:"mojito", pizza:"pizza", burger:"burger",
+  fries:"fries", sandwich:"sandwich", baked:"baked", pasta:"pasta", twister:"twister",
+  maggie:"noodle", momo:"momo", manchurian:"balls", paneer:"cube", rice:"rice",
+  noodles:"noodle", soup:"soup", dessert:"icecream" };
+/* Each section has its own photograph in /img. paneer and rice used to
+   borrow the manchurian picture; they have their own now. */
+const SEC_PHOTO = { coffee:1, shakes:1, mojito:1, pizza:1, burger:1, fries:1,
+  sandwich:1, baked:1, pasta:1, twister:1, maggie:1, momo:1, manchurian:1,
+  paneer:1, rice:1, noodles:1, soup:1, dessert:1 };
+function icon(key, cls){
+  return '<svg class="' + (cls||"") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (G[key]||G.cup) + '</svg>';
+}
+
+const GST = { rate: 0 };   // set GST_PERCENT in .env; the server is the source of truth
+const CURRENCY = "₹";
+const TABLE_COUNT = 10;
+/* Wording on the button that actually sends the order. Change it here and it
+   changes everywhere it appears. Alternatives that fit: "Send it",
+   "Order up", "Confirm order", "Send to the kitchen". */
+const ORDER_CTA = "Place order";
+
+/* ============ MENU (from the printed card) ============ */
+const MENU = [
+ { id:"coffee", name:"Coffee", items:[
+   {id:"cf1", descr:"Hot milky filter-style coffee, lightly sweet.", name:"Regular Coffee", price:50},
+   {id:"cf2", descr:"Stronger and creamier, served hot in a small cup.", name:"Thick Coffee", price:70},
+   {id:"cf3", descr:"Hot coffee with cocoa — rich, mildly sweet.", name:"Chocolate Coffee", price:80},
+   {id:"cf4", descr:"Blended cold coffee, thick and frothy over ice.", name:"Crush Cold Coffee", price:90},
+   {id:"cf5", descr:"Cold coffee topped with a scoop of ice-cream.", name:"Cold Coffee with Ice-Cream", price:100}
+ ]},
+ { id:"shakes", name:"Shakes", items:[
+   {id:"sh1", descr:"Thick chocolate shake, blended cold and frothy.", name:"Chocolate Shake", price:100},
+   {id:"sh2", descr:"Crushed Oreo blended through cold milk.", name:"Oreo Shake", price:120},
+   {id:"sh3", descr:"Milky and sweet with KitKat blended in.", name:"KitKat Shake", price:120},
+   {id:"sh4", descr:"Sweet and tangy pineapple, blended chilled.", name:"Pineapple Milk Shake", price:120},
+   {id:"sh5", descr:"Ripe mango blended thick with cold milk.", name:"Mango Milk Shake", price:140},
+   {id:"sh6", descr:"Brownie blended right in — dense and very sweet.", name:"Brownie Shake", price:150},
+   {id:"sh7", descr:"Custard apple blended cold, delicate and creamy.", name:"Sitafal Shake", price:150},
+   {id:"sh8", descr:"Sweet strawberry, blended pink and chilled.", name:"Strawberry Milk Shake", price:150},
+   {id:"sh9", descr:"Fig blended with milk — mildly sweet, nutty.", name:"Anjeer Milk Shake", price:150}
+ ]},
+ { id:"mojito", name:"Mocktails", items:[
+   {id:"mj1", descr:"Sharp green apple with mint and soda, over ice.", name:"Green Apple Mojito", price:100},
+   {id:"mj2", descr:"Bright citrus and mint, fizzy and cold.", name:"Blue Curacao Mojito", price:100},
+   {id:"mj3", descr:"Sweet mango with lime and mint, served tall.", name:"Mango Mojito", price:100},
+   {id:"mj4", descr:"Sweet-tart strawberry, mint and soda over ice.", name:"Strawberry Mojito", price:100}
+ ]},
+ { id:"pizza", name:"Pizza", note:"Small 8 inch · Medium 10 inch · Large 12 inch", sized:true,
+   sizeLabels:["Small","Medium","Large"], items:[
+   {id:"pz1", descr:"Just tomato, cheese and herbs. The simple one.", name:"Margherita", prices:[130,150,180]},
+   {id:"pz2", descr:"Sweet sliced onion over melted cheese.", name:"Onion Pizza", prices:[140,170,200]},
+   {id:"pz3", descr:"Crisp capsicum with cheese — mild and fresh.", name:"Capsicum Pizza", prices:[140,170,200]},
+   {id:"pz4", descr:"Fresh tomato and cheese, light and tangy.", name:"Tomato Pizza", prices:[140,170,200]},
+   {id:"pz5", descr:"Mixed vegetables with cheese. The everyday choice.", name:"Veg Pizza", prices:[150,180,210]},
+   {id:"pz6", descr:"Smoky tandoori masala over mixed vegetables.", name:"Tandoor Veg Pizza", prices:[170,200,230]},
+   {id:"pz7", descr:"Mixed vegetables with a proper chilli kick.", name:"Spicy Veg Pizza", prices:[180,200,230]},
+   {id:"pz8", descr:"Tangy peri peri seasoning — hot and zesty.", name:"Peri Peri Pizza", prices:[180,210,240]},
+   {id:"pz9", descr:"Earthy mushrooms melted into the cheese.", name:"Mushroom Pizza", prices:[190,220,250]},
+   {id:"pz10", descr:"Loaded with every vegetable we have.", name:"Veg Overload Pizza", prices:[200,230,250]},
+   {id:"pz11", descr:"Sweet corn under a blanket of cheese.", name:"Corn Pizza", prices:[200,230,250]},
+   {id:"pz12", descr:"Smoky tandoori paneer — rich and filling.", name:"Tandoor Paneer Pizza", prices:[200,230,250]},
+   {id:"pz13", descr:"Extra cheese with sweet corn throughout.", name:"Cheese Corn Pizza", prices:[200,250,300]},
+   {id:"pz14", descr:"Cheese in the crust as well as on top.", name:"Cheese Burst Pizza", prices:[200,250,300]},
+   {id:"pz15", descr:"Our house combo — the most loaded pizza we make.", name:"0125 My$tic Pizza", qual:"Combo", prices:[400,450,500], tag:"House special"}
+ ]},
+ { id:"burger", name:"Burger", items:[
+   {id:"bg1", descr:"Crumbed veg patty in a soft bun with salad.", name:"Veg Burger", price:70},
+   {id:"bg2", descr:"Veg patty with a melted cheese slice.", name:"Veg Cheese Burger", price:80},
+   {id:"bg3", descr:"Spiced paneer patty — soft and filling.", name:"Paneer Burger", price:100},
+   {id:"bg4", descr:"Tangy peri peri spice right through the patty.", name:"Peri Peri Burger", price:120},
+   {id:"bg5", descr:"Paneer patty with a real chilli heat.", name:"Spicy Paneer Burger", price:130},
+   {id:"bg6", descr:"Our house combo burger — the biggest one.", name:"0125 My$tic Burger", qual:"Combo", price:150, tag:"House special"}
+ ]},
+ { id:"fries", name:"Fries", items:[
+   {id:"fr1", descr:"Hot, crisp and simply salted.", name:"Salted", price:80},
+   {id:"fr2", descr:"Crisp fries tossed in tangy masala.", name:"Masala", price:100},
+   {id:"fr3", descr:"Tossed in hot peri peri seasoning.", name:"Peri Peri", price:120},
+   {id:"fr4", descr:"Coated in spicy Schejwan sauce.", name:"Schejwan", price:140},
+   {id:"fr5", descr:"Hot fries under melted cheese.", name:"Cheese", price:150}
+ ]},
+ { id:"sandwich", name:"Sandwiches", items:[
+   {id:"sw1", descr:"Grilled crisp, filled with fresh vegetables.", name:"Veg Grill", price:70},
+   {id:"sw2", descr:"Vegetables and melted cheese, grilled crisp.", name:"Veg Cheese", price:80},
+   {id:"sw3", descr:"Creamy sweet corn filling, grilled hot.", name:"Corn Sandwich", price:90},
+   {id:"sw4", descr:"Spiced paneer with cheese, grilled through.", name:"Paneer Cheese", price:100},
+   {id:"sw5", descr:"Warm chocolate filling — sweet and gooey.", name:"Chocolate", price:100},
+   {id:"sw6", descr:"Creamy vegetable filling, mild and soft.", name:"Rich Creamy", price:120},
+   {id:"sw7", descr:"Garlic butter and cheese, grilled golden.", name:"Garlic Cheese", price:120}
+ ]},
+ { id:"baked", name:"Baked Sandwiches", items:[
+   {id:"bs1", descr:"Paneer baked under bubbling cheese.", name:"Indian Cottage Cheese", price:150},
+   {id:"bs2", descr:"Spiced potato baked with cheese on top.", name:"Potato-Cheese", price:170},
+   {id:"bs3", descr:"Tangy, spicy paneer baked till golden.", name:"Chatpata Paneer", price:180},
+   {id:"bs4", descr:"Smoky tandoori filling, baked hot.", name:"Tandoor Special", price:190},
+   {id:"bs5", descr:"Loaded and baked — our richest sandwich.", name:"New York Special", price:200}
+ ]},
+ { id:"pasta", name:"Pasta", items:[
+   {id:"ps1", descr:"Creamy white sauce — mild and comforting.", name:"White Sauce Pasta", price:130},
+   {id:"ps2", descr:"Tangy tomato sauce with herbs.", name:"Red Sauce Pasta", price:140},
+   {id:"ps3", descr:"Extra cheesy and rich, served hot.", name:"Cheese Pasta", price:150}
+ ]},
+ { id:"twister", name:"Twister", items:[
+   {id:"tw1", descr:"Spiral-cut potato, fried crisp on a stick.", name:"Regular", price:60},
+   {id:"tw2", descr:"Crisp spiral potato dusted with tangy masala.", name:"Masala", price:70},
+   {id:"tw3", descr:"Crisp spiral potato with our own spice mix.", name:"Magic Masala", price:80},
+   {id:"tw4", descr:"Smoky tandoori seasoning on crisp potato.", name:"Tandoor", price:90},
+   {id:"tw5", descr:"Hot peri peri dust on a crisp spiral.", name:"Peri Peri", price:100},
+   {id:"tw6", descr:"Crisp spiral potato with melted cheese.", name:"Cheese", price:120}
+ ]},
+ { id:"maggie", name:"Maggie", items:[
+   {id:"mg1", descr:"The classic, served hot in a bowl.", name:"Regular Maggie", price:50},
+   {id:"mg2", descr:"Noodles cooked through with mixed vegetables.", name:"Veg Maggie", price:60},
+   {id:"mg3", descr:"Smoky tandoori masala stirred through.", name:"Tandoor Maggie", price:70},
+   {id:"mg4", descr:"Sweet corn through soft hot noodles.", name:"Corn Maggie", price:80},
+   {id:"mg5", descr:"Soft paneer cubes in hot noodles.", name:"Paneer Maggie", price:90},
+   {id:"mg6", descr:"Paneer and melted cheese — rich and filling.", name:"Paneer Cheese", price:100}
+ ]},
+ { id:"momo", name:"Momo", items:[
+   {id:"mo1", descr:"Steamed dumplings, served with spicy red chutney.", name:"Veg Momo", price:100},
+   {id:"mo2", descr:"Paneer-filled steamed momos with chutney.", name:"Paneer Momo", price:120}
+ ]},
+ { id:"manchurian", name:"Manchurian", items:[
+   {id:"mn1", descr:"Fried veg balls in tangy Indo-Chinese gravy.", name:"Veg Manchurian", qual:"10 pc", price:80},
+   {id:"mn2", descr:"The same balls, tossed dry and spicy.", name:"Dry Manchurian", qual:"10 pc", price:80}
+ ]},
+ { id:"paneer", name:"Paneer", items:[
+   {id:"pn1", descr:"Paneer in tangy Indo-Chinese gravy.", name:"Paneer Manchurian", qual:"10 pc", price:100},
+   {id:"pn2", descr:"Fried paneer, spicy and curry-leaf hot.", name:"Paneer 65", qual:"10 pc", price:120},
+   {id:"pn3", descr:"Paneer tossed with capsicum and green chilli.", name:"Paneer Chilli", qual:"10 pc", price:130},
+   {id:"pn4", descr:"Sweet, hot and sticky dragon sauce.", name:"Paneer Dragon", qual:"10 pc", price:150}
+ ]},
+ { id:"rice", name:"Rice", items:[
+   {id:"rc1", descr:"Wok-tossed rice with vegetables. Mild.", name:"Fried Rice", price:70},
+   {id:"rc2", descr:"Spicy Schejwan sauce right through the rice.", name:"Schejwan Rice", price:80},
+   {id:"rc3", descr:"Fried rice served with manchurian gravy.", name:"Manchurian Rice", price:90},
+   {id:"rc4", descr:"Manchurian and Schejwan together — properly hot.", name:"Manchurian Schejwan", price:100},
+   {id:"rc5", descr:"Spicy Schejwan rice with soft paneer.", name:"Paneer Schejwan", price:110},
+   {id:"rc6", descr:"Rice, noodles and gravy on one plate.", name:"Tripple Rice", price:120},
+   {id:"rc7", descr:"Fried rice tossed with mushrooms.", name:"Mushroom Rice", price:140}
+ ]},
+ { id:"noodles", name:"Noodles", items:[
+   {id:"nd1", descr:"Wok-tossed noodles — mild and savoury.", name:"Hakka Noodles", price:70},
+   {id:"nd2", descr:"Noodles tossed with mixed vegetables.", name:"Veg Noodles", price:80},
+   {id:"nd3", descr:"Hot Schejwan sauce through the noodles.", name:"Schejwan Noodles", price:90},
+   {id:"nd4", descr:"Noodles served with manchurian on top.", name:"Manchurian Noodles", price:100},
+   {id:"nd5", descr:"Soft paneer tossed through the noodles.", name:"Paneer Noodles", price:120},
+   {id:"nd6", descr:"Paneer with spicy Schejwan noodles.", name:"Paneer Schejwan Noodles", price:140}
+ ]},
+ { id:"soup", name:"Soup", items:[
+   {id:"sp1", descr:"Hot and spicy, topped with crisp fried noodles.", name:"Manchow Soup", price:70},
+   {id:"sp2", descr:"Light clear broth with vegetables.", name:"Vegetable Soup", price:80},
+   {id:"sp3", descr:"Thick, mildly sweet and comforting.", name:"Sweetcorn Soup", price:90},
+   {id:"sp4", descr:"Creamy and earthy, served hot.", name:"Mushroom Soup", price:100}
+ ]},
+ { id:"dessert", name:"Dessert", items:[
+   {id:"ds1", descr:"Classic vanilla, served cold in a cup.", name:"Vanilla", price:70},
+   {id:"ds2", descr:"Rich chocolate ice-cream.", name:"Chocolate", price:80},
+   {id:"ds3", descr:"Sweet butterscotch with a crunch through it.", name:"Butterscotch", price:90},
+   {id:"ds4", descr:"Apricot and dry fruit — rich and nutty.", name:"Dry-Fruit Apricot", price:150},
+   {id:"ds5", descr:"Our house special — the richest thing we make.", name:"0125 My$tic Special", price:200, tag:"House special"}
+ ]}
+];
+
+/* line-item catalogue: sized items expand to one entry per size */
+const CAT = {};
+function rebuildCatalogue(){
+  for (const k of Object.keys(CAT)) delete CAT[k];
+  MENU.forEach(sec => sec.items.forEach(it => {
+    if (sec.sized && it.prices){
+      it.prices.forEach((p, i) => { if (p != null) CAT[it.id + ":" + i] = { name:it.name, size:(sec.sizeLabels||["Small","Medium","Large"])[i], price:p }; });
+    } else if (it.price != null){
+      CAT[it.id] = { name:it.name, size:it.qual || "", price:it.price };
+    }
+  }));
+  /* drop anything from the cart that just left the menu */
+  Object.keys(state.cart).forEach(k => { if (!CAT[k]) delete state.cart[k]; });
+}
+
+const STATUSES = ["placed","preparing","served"];
+const STATUS_LABEL = { placed:"Order received", preparing:"In the kitchen", served:"Served" };
+
+/* ============ STATE ============ */
+const state = { view:"menu", table:null, cart:{}, note:"", myOrderId:null, myOrder:null,
+                orders:[], sheetMode:null, qrTables:TABLE_COUNT,
+                phone:"", phoneVerified:false, otpSent:null, otpErr:"", resendAt:0,
+                staff:false, staffErr:"", demoCode:null, sending:false, q:"",
+                adminTab:"orders", history:null, histRange:"today", histQ:"", histLoading:false,
+                onlinePay:false, pendingPay:null, payBusy:false,
+                seenOrders:null, flashOrders:new Set(),
+                calls:[], seenCalls:null, callId:null, callPending:false, splitFor:null,
+                soundOn:(() => { try { return localStorage.getItem("mf_sound") !== "0"; } catch(e){ return true; } })() };
+state.staff = false; state.staffErr = "";
+rebuildCatalogue();
+
+
+/* ============ HELPERS ============ */
+const $ = s => document.querySelector(s);
+const money = n => CURRENCY + Number(n).toLocaleString("en-IN");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+function cartLines(){
+  return Object.keys(state.cart).filter(k => state.cart[k] > 0)
+    .map(k => ({ key:k, qty:state.cart[k], it:CAT[k] })).filter(l => l.it);
+}
+function totals(lines){
+  const sub = lines.reduce((a,l) => a + l.it.price * l.qty, 0);
+  const gst = Math.round(sub * GST.rate);
+  return { sub, gst, total: sub + gst, count: lines.reduce((a,l)=>a+l.qty,0) };
+}
+const orderNo = ts => "M" + String(ts).slice(-5);
+function ago(iso){
+  const m = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60000));
+  return m < 1 ? "just now" : m + " min";
+}
+const agoPhrase = iso => { const a = ago(iso); return a === "just now" ? "placed just now" : "placed " + a + " ago"; };
+let toastTimer;
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove("show"), 2400);
+}
+const label = it => it.name + (it.size ? " (" + it.size + ")" : "");
+
+/* ============ ROUTING ============ */
+function readRoute(){
+  const path = location.pathname.replace(/\/+$/, "") || "/";
+  if (path === "/kitchen"){ state.view = "kitchen"; return; }
+  if (path === "/qr"){ state.view = "qr"; return; }
+  if (path === "/admin"){ state.view = "admin"; return; }
+  state.view = "menu";
+  const t = new URLSearchParams(location.search).get("t");
+  if (t) state.table = /^takeaway$/i.test(t) ? "takeaway" : (parseInt(t, 10) || null);
+}
+function go(path){
+  history.pushState({}, "", path);
+  readRoute(); wire(); render();
+}
+window.addEventListener("popstate", () => { readRoute(); wire(); render(); });
+
+/* ============ SERVER ============ */
+const api = {
+  async call(method, path, body){
+    const res = await fetch(path, {
+      method,
+      headers: body ? { "Content-Type":"application/json" } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: "same-origin"
+    });
+    let data = {};
+    try { data = await res.json(); } catch(e){}
+    if (!res.ok) throw Object.assign(new Error(data.error || "Request failed"), { status: res.status, data });
+    return data;
+  },
+  get:(p)=>api.call("GET",p), post:(p,b)=>api.call("POST",p,b),
+  patch:(p,b)=>api.call("PATCH",p,b), del:(p)=>api.call("DELETE",p)
+};
+
+/* ============ NEW-ORDER CHIME ============
+   Synthesised rather than loaded from a file: nothing to download, nothing to
+   block on cafe wifi, and it still works with the internet down. A rising
+   fourth played twice — short, and it cuts through kitchen noise better than
+   a single beep. */
+let audioCtx = null;
+function audioReady(){
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  if (!audioCtx) { try { audioCtx = new AC(); } catch(e){ return null; } }
+  if (audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
+  return audioCtx;
+}
+function tones(notes, type){
+  const ctx = audioReady();
+  if (!ctx || ctx.state !== "running") return false;
+  const t0 = ctx.currentTime;
+  notes.forEach(([hz, at]) => {
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = type; osc.frequency.value = hz;
+    gain.gain.setValueAtTime(0.0001, t0 + at);
+    gain.gain.exponentialRampToValueAtTime(0.35, t0 + at + .012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + at + .38);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t0 + at); osc.stop(t0 + at + .42);
+  });
+  return true;
+}
+/* A table pressing the bell must not sound like an order arriving — staff
+   have to tell them apart without looking up. Lower, and three insistent
+   repeats rather than a rising pair. */
+function buzzer(){
+  return tones([[660, 0], [523.25, .17], [660, .34], [523.25, .51], [660, .68]], "square");
+}
+function chime(){
+  const ctx = audioReady();
+  if (!ctx || ctx.state !== "running") return false;
+  const t0 = ctx.currentTime;
+  /* A5 then D6, twice */
+  [[880, 0], [1174.66, .15], [880, .42], [1174.66, .57]].forEach(([hz, at]) => {
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = "triangle";                 /* rounder than square, carries further than sine */
+    osc.frequency.value = hz;
+    gain.gain.setValueAtTime(0.0001, t0 + at);
+    gain.gain.exponentialRampToValueAtTime(0.35, t0 + at + .012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + at + .38);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t0 + at); osc.stop(t0 + at + .42);
+  });
+  return true;
+}
+/* Browsers refuse to play anything until the page has been interacted with.
+   Signing in counts, but a tablet that reloaded overnight will not have been
+   touched — hence the "tap to enable" chip on the kitchen screen. */
+const soundBlocked = () => state.soundOn && (!audioCtx || audioCtx.state !== "running");
+/* Both staff screens need this, not just the kitchen — a manager watching
+   /admin was getting silent bells with nothing on screen to explain why. */
+function soundChip(){
+  return soundBlocked()
+    ? '<button class="chip soundwarn" data-sound-unlock>🔇 Tap to enable sound</button>'
+    : '<button class="chip' + (state.soundOn ? " on" : "") + '" data-sound>' +
+      (state.soundOn ? "🔔 Sound on" : "🔕 Sound off") + '</button>';
+}
+/* Preview the sound that screen actually cares about: a manager on /admin is
+   listening for the bell, not for an order landing. */
+const previewSound = () => (state.view === "admin" ? buzzer() : chime());
+function toggleSound(){
+  state.soundOn = !state.soundOn;
+  try { localStorage.setItem("mf_sound", state.soundOn ? "1" : "0"); } catch(e){}
+  if (state.soundOn && previewSound()) toast("Sound on");
+  else if (!state.soundOn) toast("Sound off");
+  render();
+}
+
+let poller = null;
+function wire(){
+  clearInterval(poller);
+  if (state.view === "kitchen" && state.staff){
+    pollKitchen(); poller = setInterval(pollKitchen, 4000);
+  } else if (state.view === "menu" && state.myOrderId){
+    pollMine(); poller = setInterval(pollMine, 5000);
+  } else if (state.view === "admin" && state.staff && state.adminTab === "orders" && !state.history){
+    loadHistory(false);
+  }
+  /* Waiter calls are polled on both staff screens, independently of the
+     board poller, so whichever one is open still rings. */
+  clearInterval(callsPoller);
+  if (state.staff && (state.view === "admin" || state.view === "kitchen")){
+    pollCalls(); callsPoller = setInterval(pollCalls, 4000);
+  }
+}
+
+let callsPoller = null;
+async function pollCalls(){
+  try {
+    const d = await api.get("/api/calls");
+    const ids = new Set(d.calls.map(c => c.id));
+    if (state.seenCalls === null){
+      state.seenCalls = ids;                 /* first look just records what is already waiting */
+    } else {
+      const fresh = [...ids].filter(id => !state.seenCalls.has(id));
+      state.seenCalls = ids;
+      if (fresh.length && state.soundOn) buzzer();
+    }
+    const before = state.calls.length;
+    state.calls = d.calls;
+    if (before !== d.calls.length || d.calls.length) render();
+  } catch(e){ if (e.status === 401){ state.staff = false; clearInterval(callsPoller); render(); } }
+}
+async function ackCall(id){
+  state.calls = state.calls.filter(c => c.id !== id); render();   /* optimistic */
+  try { await api.patch("/api/calls/" + id, {}); } catch(e){ toast("Could not clear that."); }
+  pollCalls();
+}
+/* The strip that sits above whatever staff are looking at. */
+function callsStrip(){
+  if (!state.calls.length) return "";
+  return '<div class="calls">' + state.calls.map(c => {
+    const mins = Math.floor((Date.now() - new Date(c.at).getTime()) / 60000);
+    return '<div class="call' + (mins >= 3 ? " late" : "") + '">' + BELL_ICON +
+      '<span class="call-table">' + esc(c.table) + '</span>' +
+      '<span class="call-age num">' + (mins < 1 ? "just now" : mins + " min") + '</span>' +
+      '<button class="call-ack" data-ack="' + c.id + '">On my way</button></div>';
+  }).join("") + '</div>';
+}
+async function pollKitchen(){
+  try {
+    const d = await api.get("/api/orders");
+    /* Ring only for orders that appeared since the last poll. The first fetch
+       after opening the page just records what is already there, otherwise
+       every reload would set off the whole board. */
+    const ids = new Set(d.orders.filter(o => o.status === "placed").map(o => o.id));
+    if (state.seenOrders === null){
+      state.seenOrders = ids;
+    } else {
+      const fresh = [...ids].filter(id => !state.seenOrders.has(id));
+      state.seenOrders = ids;
+      if (fresh.length){
+        state.flashOrders = new Set(fresh);
+        if (state.soundOn) chime();
+        setTimeout(() => { state.flashOrders = new Set(); render(); }, 12000);
+      }
+    }
+    state.orders = d.orders; state.staff = true; render();
+  }
+  catch(e){ if (e.status === 401){ state.staff = false; clearInterval(poller); render(); } }
+}
+async function pollMine(){
+  try {
+    const d = await api.get("/api/orders/" + state.myOrderId);
+    state.myOrder = d.order; render();
+    if (d.order.status === "served") clearInterval(poller);
+  } catch(e){ if (e.status === 404 || e.status === 403){ state.myOrderId = null; clearInterval(poller); } }
+}
+
+async function loadMenu(){
+  try {
+    const d = await api.get("/api/menu");
+    if (d.menu && d.menu.length){ MENU.length = 0; d.menu.forEach(s => MENU.push(s)); rebuildCatalogue(); }
+    if (typeof d.gstPercent === "number") GST.rate = d.gstPercent / 100;
+    state.onlinePay = !!d.onlinePay;   /* server decides; no keys means no Pay now button */
+  } catch(e){ /* fall back to the menu baked into this file */ }
+  render();
+}
+
+async function boot(){
+  try { const me = await api.get("/api/me"); if (me.phone){ state.phone = me.phone; state.phoneVerified = true; } } catch(e){}
+  try { const s = await api.get("/api/staff/me"); state.staff = !!s.staff; } catch(e){}
+  await loadMenu();
+  wire();
+}
+
+async function placeOrder(payMode){
+  const lines = cartLines(); if (!lines.length) return;
+  if (!state.phoneVerified){ state.pendingPayMode = payMode; openSheet("phone"); return; }
+  const table = state.table === "takeaway" ? "Takeaway" : "Table " + state.table;
+  closeSheet();
+  try {
+    const d = await api.post("/api/orders", {
+      table, note: state.note.trim(),
+      items: lines.map(l => ({ key:l.key, qty:l.qty })),
+      payMode: payMode || "counter"
+    });
+    state.myOrderId = d.order.id; state.myOrder = d.order;
+    state.cart = {}; state.note = "";
+    if (d.razorpay){ state.pendingPay = d.razorpay; wire(); render(); return openCheckout(); }
+    wire(); render();
+  } catch(e){
+    if (e.status === 401){ state.phoneVerified = false; openSheet("phone"); return; }
+    toast(e.message || "Could not send the order.");
+    if (/ran out|no longer on the menu/i.test(e.message || "")) loadMenu();
+  }
+}
+/* ============ ONLINE PAYMENT ============
+   Razorpay's checkout script has to come from their domain -- it cannot be
+   vendored locally the way the QR library was. If it will not load, the order
+   already exists and the customer is told to settle at the counter. */
+function loadRazorpay(){
+  if (window.Razorpay) return Promise.resolve(true);
+  return new Promise(resolve => {
+    const s = document.createElement("script");
+    s.src = "https://checkout.razorpay.com/v1/checkout.js";
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.head.appendChild(s);
+  });
+}
+
+async function openCheckout(){
+  const r = state.pendingPay;
+  if (!r || state.payBusy) return;
+  state.payBusy = true; render();
+  const ready = await loadRazorpay();
+  state.payBusy = false;
+  if (!ready){
+    toast("Could not open the payment window. Please pay at the counter.");
+    render(); return;
+  }
+  const rz = new window.Razorpay({
+    key: r.keyId, order_id: r.orderId, amount: r.amount, currency: "INR",
+    name: r.name, description: "Table order " + (state.myOrder?.no || ""),
+    prefill: { contact: r.prefillPhone },
+    theme: { color: getComputedStyle(document.documentElement).getPropertyValue("--gold").trim() || "#E3B24A" },
+    handler: resp => confirmPayment(resp),
+    modal: { ondismiss: () => { toast("Payment cancelled. Your order is not in the kitchen yet."); render(); } },
+  });
+  rz.on("payment.failed", resp => {
+    toast(resp?.error?.description || "That payment did not go through.");
+    render();
+  });
+  rz.open();
+}
+
+async function confirmPayment(resp){
+  state.payBusy = true; render();
+  try {
+    const d = await api.post("/api/payments/verify", {
+      razorpay_order_id: resp.razorpay_order_id,
+      razorpay_payment_id: resp.razorpay_payment_id,
+      razorpay_signature: resp.razorpay_signature,
+    });
+    state.myOrder = d.order; state.myOrderId = d.order.id; state.pendingPay = null;
+    toast("Paid — the kitchen has your order.");
+  } catch(e){
+    /* The money may well have left their account, so never imply it did not.
+       The webhook is what rescues this case server-side. */
+    toast(e.message || "We could not confirm that payment. Please show this screen to staff.");
+  }
+  state.payBusy = false;
+  wire(); render();
+}
+
+async function setStatus(id, status){
+  const o = state.orders.find(o => o.id === id); if (o) { o.status = status; render(); }
+  try { await api.patch("/api/orders/" + id, { status }); } catch(e){ toast("Update failed."); }
+  pollKitchen();
+}
+async function clearServed(){
+  try { await api.del("/api/orders/served"); pollKitchen(); } catch(e){ toast("Could not clear those."); }
+}
+async function staffLogin(password){
+  try { await api.post("/api/staff/login", { password }); state.staff = true; state.staffErr = ""; wire(); render(); }
+  catch(e){ state.staffErr = e.message || "Wrong password."; render(); }
+}
+
+/* ================= PHONE VERIFICATION =================
+   The server generates the code, stores it in Turso and — if you have put
+   an SMS provider key in .env — texts it. With no provider configured the
+   server returns the code so the page can show it (demo mode). The code
+   is never checked in the browser: /api/otp/verify does that and sets a
+   signed cookie, which is what lets an order through. */
+const validPhone = p => /^[6-9]\d{9}$/.test(p);
+
+async function sendOtp(){
+  if (!validPhone(state.phone)){ state.otpErr = "Enter a 10-digit mobile number starting with 6, 7, 8 or 9."; renderSheet(); return; }
+  if (state.sending) return;
+  state.sending = true; state.otpErr = ""; renderSheet();
+  try {
+    const d = await api.post("/api/otp/send", { phone: state.phone });
+    state.demoCode = d.demoCode || null;
+    state.smsMode = d.mode;
+    state.resendAt = Date.now() + 30000;
+    state.sheetMode = "otp";
+  } catch(e){
+    state.otpErr = e.message || "Could not send the code.";
+  } finally {
+    state.sending = false; renderSheet(); tickResend();
+  }
+}
+
+async function checkOtp(entered){
+  if (entered.length !== 6){ state.otpErr = "Enter all six digits."; renderSheet(); return; }
+  if (state.sending) return;
+  state.sending = true; renderSheet();
+  try {
+    await api.post("/api/otp/verify", { phone: state.phone, code: entered });
+    state.phoneVerified = true; state.demoCode = null; state.otpErr = "";
+    toast("Number verified");
+    state.sending = false;
+    /* Resume whichever button they pressed before we interrupted them. */
+    if (cartLines().length){ placeOrder(state.pendingPayMode || "counter"); }
+    else { closeSheet(); render(); }
+    state.pendingPayMode = null;
+    return;
+  } catch(e){
+    state.otpErr = e.message || "That code is wrong.";
+  }
+  state.sending = false; renderSheet();
+}
+
+let resendTimer;
+function tickResend(){
+  clearInterval(resendTimer);
+  resendTimer = setInterval(() => {
+    if (state.sheetMode !== "otp"){ clearInterval(resendTimer); return; }
+    const el = document.getElementById("resend"); if (!el) return;
+    const left = Math.ceil((state.resendAt - Date.now()) / 1000);
+    if (left > 0){ el.disabled = true; el.textContent = "Resend code in " + left + "s"; }
+    else { el.disabled = false; el.textContent = "Resend code"; clearInterval(resendTimer); }
+  }, 500);
+}
+function changeNumber(){ state.phoneVerified = false; state.demoCode = null; state.otpErr = ""; openSheet("phone"); }
+
+/* ============ SHEET ============ */
+/* ============ CALL A SERVER ============
+   One tap, no menu of reasons — staff walk over and ask. The button locks
+   into a waiting state so pressing it again does nothing, which is most of
+   the abuse control right there. */
+const BELL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+  'stroke-linecap="round" stroke-linejoin="round">' +
+  '<path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M10.3 20a2 2 0 0 0 3.4 0"/></svg>';
+
+async function callServer(){
+  if (state.callPending) return;
+  if (!state.table){ toast("Tell us your table first."); return openSheet("table"); }
+  const table = state.table === "takeaway" ? "Takeaway" : "Table " + state.table;
+  state.callPending = true; render();
+  try {
+    const d = await api.post("/api/calls", { table });
+    state.callId = d.id;
+    toast(d.alreadyWaiting ? "A server is already on the way." : "A server is coming.");
+    watchCall();
+  } catch(e){
+    state.callPending = false;
+    toast(e.message || "Could not call a server. Please wave someone down.");
+  }
+  render();
+}
+/* Clears itself once staff acknowledge, so the button comes back to life
+   without the customer reloading. */
+let callPoll = null;
+function watchCall(){
+  clearInterval(callPoll);
+  if (!state.callId) return;
+  callPoll = setInterval(async () => {
+    try {
+      const d = await api.get("/api/calls/" + state.callId);
+      if (d.acknowledged){
+        clearInterval(callPoll);
+        state.callPending = false; state.callId = null;
+        toast("A server is with you.");
+        render();
+      }
+    } catch(e){ clearInterval(callPoll); state.callPending = false; render(); }
+  }, 5000);
+}
+
+/* ============ SEARCH ============
+   Eighteen sections and a hundred-odd dishes is a lot to thumb through when
+   you already know you want paneer. Lives in the sheet so it costs no
+   permanent height on a phone screen. */
+const SEARCH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+
+function searchHits(q){
+  const needle = q.trim().toLowerCase();
+  if (needle.length < 1) return null;
+  const hits = [];
+  MENU.forEach(sec => sec.items.forEach(it => {
+    if (it.available === false) return;
+    /* Descriptions are searchable too, so "creamy", "smoky" or "spicy" find
+       dishes whose names never mention it. */
+    const hay = (it.name + " " + (it.qual || "") + " " + (it.tag || "") + " " +
+                 (it.descr || "") + " " + sec.name).toLowerCase();
+    if (!hay.includes(needle)) return;
+    /* a name match sorts above a match that only hit the section name */
+    hits.push({ sec, it, rank: it.name.toLowerCase().startsWith(needle) ? 0
+                                : it.name.toLowerCase().includes(needle) ? 1 : 2 });
+  }));
+  hits.sort((a, b) => a.rank - b.rank);
+  return hits;
+}
+
+function mark(name, q){
+  const needle = q.trim();
+  const i = name.toLowerCase().indexOf(needle.toLowerCase());
+  if (i < 0 || !needle) return esc(name);
+  return esc(name.slice(0, i)) + '<i class="qmark">' + esc(name.slice(i, i + needle.length)) + '</i>' +
+         esc(name.slice(i + needle.length));
+}
+
+function renderSearchResults(){
+  const box = document.getElementById("qresults");
+  if (!box) return;
+  const hits = searchHits(state.q);
+  if (hits === null){
+    box.innerHTML = '<p class="qhint">Try “paneer”, “cheese”, “cold”, “pizza” — or a whole section like “shakes”.</p>';
+    return;
+  }
+  if (!hits.length){
+    box.innerHTML = '<div class="empty" style="margin:16px 0">Nothing on the menu matches “' + esc(state.q) + '”.</div>';
+    return;
+  }
+  let lastSec = null, html = "";
+  hits.forEach(h => {
+    if (h.sec.id !== lastSec){ html += '<div class="qsec">' + esc(h.sec.name) + '</div>'; lastSec = h.sec.id; }
+    html += h.sec.sized && h.it.prices ? sizedRow(h.sec, h.it, SEC_GLYPH[h.sec.id], state.q)
+                                       : plainRow(h.it, SEC_GLYPH[h.sec.id], state.q);
+  });
+  box.innerHTML = html;
+}
+
+function openSheet(m){ state.sheetMode = m; renderSheet(); $("#sheet").classList.add("show"); $("#scrim").classList.add("show"); }
+function closeSheet(){ state.sheetMode = null; $("#sheet").classList.remove("show"); $("#scrim").classList.remove("show"); }
+$("#scrim").addEventListener("click", closeSheet);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  if (e.key === "Enter" && e.target.id === "staffpw"){ e.preventDefault(); staffLogin(e.target.value); }
+});
+
+function renderSheet(){
+  const el = $("#sheet");
+  if (state.sheetMode === "search"){
+    el.innerHTML = '<div class="sheet-head"><div class="sheet-title">Find a dish</div>' +
+      '<button class="x" data-close aria-label="Close">✕</button></div>' +
+      '<div class="sheet-body"><div class="searchbar">' + SEARCH_ICON +
+      '<input id="q" type="text" inputmode="search" autocomplete="off" autocorrect="off" ' +
+      'spellcheck="false" placeholder="Search the menu" value="' + esc(state.q) + '">' +
+      '<button class="qclear" data-qclear aria-label="Clear search" style="display:' +
+      (state.q ? "block" : "none") + '">✕</button>' +
+      '</div><div id="qresults"></div></div>';
+    renderSearchResults();
+    setTimeout(() => {
+      const f = document.getElementById("q");
+      if (f){ f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
+    }, 60);
+    return;
+  }
+  if (state.sheetMode === "phone"){
+    el.innerHTML = '<div class="sheet-head"><div class="sheet-title">Your mobile number</div>' +
+      '<button class="x" data-close aria-label="Close">✕</button></div>' +
+      '<div class="sheet-body"><p style="color:var(--ink-2);font-size:13.5px;margin:6px 0 0">' +
+      'So the kitchen can reach you if something on your order runs out.</p>' +
+      '<div class="phone-field"><span class="cc">+91</span>' +
+      '<input id="phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" ' +
+      'placeholder="98765 43210" value="' + esc(state.phone) + '"></div>' +
+      (state.otpErr ? '<p class="muted" style="color:var(--crit)">' + esc(state.otpErr) + '</p>' : '') +
+      '<button class="btn" data-sendotp' + (state.sending ? " disabled" : "") + '>' + (state.sending ? "Sending…" : "Send code") + '</button>' +
+      '<p class="muted">We only use this number for your order. No marketing messages.</p></div>';
+    setTimeout(() => { const f = document.getElementById("phone"); if (f) f.focus(); }, 60);
+    return;
+  }
+  if (state.sheetMode === "otp"){
+    el.innerHTML = '<div class="sheet-head"><div class="sheet-title">Enter the code</div>' +
+      '<button class="x" data-close aria-label="Close">✕</button></div>' +
+      '<div class="sheet-body"><p style="color:var(--ink-2);font-size:13.5px;margin:6px 0 0">' +
+      'Sent to <b>+91 ' + esc(state.phone) + '</b> · <button class="linkbtn" data-changenum>change</button></p>' +
+      '<input id="otp" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" ' +
+      'class="otp-input" placeholder="······">' +
+      (state.otpErr ? '<p class="muted" style="color:var(--crit)">' + esc(state.otpErr) + '</p>' : '') +
+      (state.demoCode
+        ? '<div class="demo">Demo mode — no SMS provider is configured, so the code is shown here instead of being texted:<b>' + esc(state.demoCode) + '</b></div>'
+        : '<p class="muted" style="text-align:center">Sent by SMS. It can take a few seconds.</p>') +
+      '<button class="btn" data-verify' + (state.sending ? " disabled" : "") + '>' +
+      (state.sending ? "Checking…" : "Verify &amp; " + ORDER_CTA.toLowerCase()) + '</button>' +
+      '<p class="muted" style="text-align:center"><button class="linkbtn" id="resend" data-resend disabled>Resend code in 30s</button></p></div>';
+    setTimeout(() => { const f = document.getElementById("otp"); if (f) f.focus(); }, 60);
+    tickResend();
+    return;
+  }
+  if (state.sheetMode === "table"){
+    let cells = "";
+    for (let i = 1; i <= TABLE_COUNT; i++)
+      cells += '<button class="tbl' + (state.table === i ? " on" : "") + '" data-table="' + i + '">' + i + '</button>';
+    cells += '<button class="tbl wide-btn' + (state.table === "takeaway" ? " on" : "") + '" data-table="takeaway">Takeaway / counter</button>';
+    el.innerHTML = '<div class="sheet-head"><div class="sheet-title">Which table?</div><button class="x" data-close aria-label="Close">✕</button></div>' +
+      '<div class="sheet-body"><p style="color:var(--ink-2);font-size:13px;margin:6px 0 0">The QR code on your table fills this in for you. Pick it here if you opened the menu another way.</p>' +
+      '<div class="tables">' + cells + '</div></div>';
+    return;
+  }
+  const lines = cartLines(), t = totals(lines);
+  if (!lines.length){
+    el.innerHTML = '<div class="sheet-head"><div class="sheet-title">Your order</div><button class="x" data-close aria-label="Close">✕</button></div>' +
+      '<div class="sheet-body"><div class="empty" style="margin:16px 0">Nothing added yet.</div></div>';
+    return;
+  }
+  const rows = lines.map(l =>
+    '<div class="line"><div class="line-name">' + esc(label(l.it)) + '<small>' + money(l.it.price) + ' each</small></div>' +
+    '<div class="step" style="min-width:68px"><button data-dec="' + l.key + '" aria-label="One less">−</button>' +
+    '<span class="num">' + l.qty + '</span><button data-inc="' + l.key + '" aria-label="One more">+</button></div>' +
+    '<div class="line-amt num">' + money(l.it.price * l.qty) + '</div></div>').join("");
+  const where = state.table ? (state.table === "takeaway" ? "Takeaway" : "Table " + state.table) : null;
+  el.innerHTML =
+    '<div class="sheet-head"><div class="sheet-title">Your order</div>' +
+    '<button class="chip" data-picktable>' + (where || "Select table") + '</button>' +
+    '<button class="x" data-close aria-label="Close">✕</button></div>' +
+    '<div class="sheet-body">' + rows +
+    '<textarea class="field" id="note" placeholder="Anything for the kitchen? Less spicy, extra cheese, no onion…">' + esc(state.note) + '</textarea>' +
+    '<div class="bill">' +
+      (GST.rate ? '<div><span>Subtotal</span><span class="num">' + money(t.sub) + '</span></div>' +
+                  '<div><span>GST ' + Math.round(GST.rate*100) + '%</span><span class="num">' + money(t.gst) + '</span></div>' : '') +
+      '<div class="total"><span>Total</span><span class="num">' + money(t.total) + '</span></div></div>' +
+    (!where
+      ? '<button class="btn" disabled>Pick your table first</button>'
+      : state.onlinePay
+        ? '<button class="btn" data-place="online">Pay now · ' + money(t.total) + '</button>' +
+          '<button class="btn ghost" data-place="counter">' + ORDER_CTA + ', pay at the counter</button>'
+        : '<button class="btn" data-place="counter">' +
+          (state.phoneVerified ? ORDER_CTA + " · " + money(t.total) : "Continue · " + money(t.total)) +
+          '</button>') +
+    (state.phoneVerified
+      ? '<p style="text-align:center;margin:12px 0 2px"><span class="verified">✓ +91 ' + esc(state.phone) + '</span>' +
+        ' <button class="linkbtn" data-changenum style="margin-left:6px">change</button></p>'
+      : '<p class="muted" style="text-align:center">You\'ll verify your mobile number on the next step.</p>') +
+    '<p style="text-align:center;font-size:12px;color:var(--ink-3);margin:8px 0 2px">' +
+    'Pay at the counter — cash or PhonePe.</p></div>';
+}
+$("#sheet").addEventListener("input", e => {
+  if (e.target.id === "note") state.note = e.target.value;
+  if (e.target.id === "q"){
+    state.q = e.target.value;
+    const c = $("#sheet").querySelector(".qclear");
+    if (c) c.style.display = state.q ? "block" : "none";
+    renderSearchResults();          /* only the results redraw, so focus and caret survive */
+  }
+  if (e.target.id === "phone"){
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0,10);
+    state.phone = e.target.value;
+  }
+  if (e.target.id === "otp"){
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0,6);
+    if (e.target.value.length === 6) checkOtp(e.target.value);
+  }
+});
+$("#sheet").addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if (e.target.id === "phone"){ e.preventDefault(); sendOtp(); }
+  if (e.target.id === "otp"){ e.preventDefault(); checkOtp(e.target.value); }
+});
+$("#sheet").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  /* The sheet does its own dispatch, and the document-level handler below
+     understands the same data- attributes. Without stopping here the event
+     bubbled on and every +/− tap inside the sheet counted twice. */
+  e.stopPropagation();
+  const searching = state.sheetMode === "search";
+  const redraw = () => { if (searching) renderSearchResults(); else renderSheet(); };
+
+  if (b.hasAttribute("data-close")) return closeSheet();
+  if (b.hasAttribute("data-picktable")) return openSheet("table");
+  if (b.hasAttribute("data-place")) return placeOrder(b.dataset.place || "counter");
+  if (b.hasAttribute("data-sendotp")) return sendOtp();
+  if (b.hasAttribute("data-verify")){ const f = document.getElementById("otp"); return checkOtp(f ? f.value : ""); }
+  if (b.hasAttribute("data-resend")) return sendOtp();
+  if (b.hasAttribute("data-changenum")) return changeNumber();
+  if (b.hasAttribute("data-qclear")){
+    state.q = ""; renderSheet(); return;
+  }
+  if (b.dataset.table){ state.table = b.dataset.table === "takeaway" ? "takeaway" : parseInt(b.dataset.table,10); openSheet("cart"); render(); return; }
+  if (b.dataset.inc){ state.cart[b.dataset.inc] = (state.cart[b.dataset.inc]||0) + 1; redraw(); render(); return; }
+  if (b.dataset.dec){
+    const k = b.dataset.dec; state.cart[k] = Math.max(0,(state.cart[k]||0) - 1);
+    if (!state.cart[k]) delete state.cart[k];
+    if (!searching && !cartLines().length) closeSheet(); else redraw();
+    render(); return;
+  }
+  if (b.dataset.clearitem){
+    Object.keys(state.cart).forEach(k => { if (k.split(":")[0] === b.dataset.clearitem) delete state.cart[k]; });
+    redraw(); render(); return;
+  }
+});
+
+/* ============ MENU VIEW ============ */
+function renderMenu(){
+  if (state.myOrder && state.myOrder.status !== "served") return renderStatus();
+  const where = state.table ? (state.table === "takeaway" ? "Takeaway" : "Table " + state.table) : "Select table";
+  const nav = MENU.map(s => '<button class="cat-pill" data-cat="' + s.id + '">' + esc(s.name) + '</button>').join("");
+
+  const secs = MENU.map(sec =>
+    '<section class="sec" id="sec-' + sec.id + '">' + hero(sec) +
+      '<div class="badge"><span>' + esc(sec.name) + '</span></div>' +
+      (sec.note ? '<p class="sec-note">' + esc(sec.note) + '</p>' : '') +
+      '<div class="items">' + sec.items.filter(it => it.available !== false).map(it => sec.sized ? sizedRow(sec, it, SEC_GLYPH[sec.id]) : plainRow(it, SEC_GLYPH[sec.id])).join("") + '</div>' +
+    '</section>').join("");
+
+  const t = totals(cartLines());
+  /* A drop falling into still water — the name, drawn. */
+  const CREST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+    'stroke-linecap="round"><path d="M12 2c0 0 5 6.2 5 9.6a5 5 0 0 1-10 0C7 8.2 12 2 12 2Z"/>' +
+    '<path d="M3 19c2.2 0 2.2 1.6 4.5 1.6S9.7 19 12 19s2.2 1.6 4.5 1.6S18.8 19 21 19" opacity=".75"/></svg>';
+
+  return '<div class="app">' +
+    '<div class="masthead">' +
+      '<div class="crest-no goldtext">' + CAFE.code + '</div>' +
+      '<div class="crest-rule"><i></i>' + CREST + '<i></i></div>' +
+      '<h1 class="crest-name">' + CAFE.name + '</h1>' +
+      '<div class="crest-kind">' + CAFE.kind + '</div>' +
+      '<div class="crest-tag">Siblings · Friends · Family</div>' +
+      '<div class="crest-meta"><span class="pureveg"><i></i>Pure Veg</span>' +
+      '<span class="place">' + esc(CAFE.place) + '</span></div>' +
+    '</div>' +
+    '<header class="topbar"><div class="topbar-in"><div class="mark">' +
+      /* short form: the crest above already gives the full name, and Cinzel is
+         wide enough that the long version clipped on a phone */
+      '<div class="logo goldtext">' + CAFE.code + ' ' + CAFE.name + '</div>' +
+      '</div>' +
+      '<button class="iconbtn' + (state.callPending ? " waiting" : "") + '" data-callserver ' +
+      'aria-label="Call a server">' + BELL_ICON + '</button>' +
+      '<button class="iconbtn" data-search aria-label="Search the menu">' + SEARCH_ICON + '</button>' +
+      '<button class="chip" data-picktable><span class="dot"></span>' + where + '</button>' +
+    '</div><div class="hairline"></div></header>' +
+    '<nav class="rail"><div class="rail-scroll">' + nav + '</div></nav>' +
+    secs +
+    (state.myOrder && state.myOrder.status === "served"
+      ? '<div class="sec"><div class="empty">Order ' + esc(state.myOrder.no) + ' was served. Anything else goes on the same table bill.</div></div>' : '') +
+    '<footer class="foot"><div class="divider"></div>' +
+      '<b>"Siblings Friends Family"</b><br>' +
+      esc(CAFE.place) + ' · ' + esc(CAFE.insta) + '<br>' +
+      'Wi-Fi password <b>' + esc(CAFE.wifi) + '</b> · Cash &amp; PhonePe</footer>' +
+    '</div>' +
+    '<div class="cartbar' + (t.count ? " show" : "") + '"><button class="cartbar-in" data-opencart>' +
+      '<span style="flex:1;text-align:left"><small>' + t.count + (t.count === 1 ? " item" : " items") + '</small>View order</span>' +
+      '<span class="num">' + money(t.total) + '</span></button></div>';
+}
+
+function hero(sec){
+  if (!SEC_PHOTO[sec.id]) return '<div class="hero glyphpanel">' + icon(SEC_GLYPH[sec.id]) + '</div>';
+  /* webp for anything from the last five years, jpeg for the rest. The
+     dimensions are stated so the row does not jump when the photo lands.
+     Paths are relative, not root-absolute, so the page also renders when it
+     is opened straight off disk rather than through the server. */
+  return '<div class="hero"><picture>' +
+    '<source type="image/webp" srcset="img/' + sec.id + '.webp">' +
+    '<img src="img/' + sec.id + '.jpg" alt="' + esc(sec.name) + '" ' +
+    'loading="lazy" decoding="async" width="1200" height="400"></picture></div>';
+}
+function plainRow(it, g, hl){
+  const q = state.cart[it.id] || 0;
+  const ctrl = q > 0
+    ? '<div class="step"><button data-dec="' + it.id + '" aria-label="One less ' + esc(it.name) + '">−</button><span class="num">' + q + '</span><button data-inc="' + it.id + '" aria-label="One more ' + esc(it.name) + '">+</button></div>'
+    : '<button class="add" data-inc="' + it.id + '">Add</button>';
+  return '<div class="row' + (q ? " incart" : "") + '"><div class="r-ico">' + icon(g) + '</div><div class="r-main"><div class="r-name">' + (hl ? mark(it.name, hl) : esc(it.name)) +
+    (it.qual ? '<span class="r-qual">(' + esc(it.qual) + ')</span>' : '') +
+    (it.tag ? '<span class="tag">' + esc(it.tag) + '</span>' : '') + '</div></div>' +
+    '<div class="r-price num">' + money(it.price) + '</div>' + ctrl +
+    (it.descr ? '<div class="r-desc">' + (hl ? mark(it.descr, hl) : esc(it.descr)) + '</div>' : '') +
+    '</div>';
+}
+function sizedRow(sec, it, g, hl){
+  const chips = it.prices.map((p, i) => {
+    if (p == null) return "";
+    const key = it.id + ":" + i, q = state.cart[key] || 0;
+    const label = '<i>' + esc(sec.sizeLabels[i]) + '</i><b class="num">' + money(p) + '</b>';
+    /* Untouched: the whole chip is the Add target. Chosen: a div, because the
+       stepper inside it is made of buttons and a button cannot nest one. */
+    return q
+      ? '<div class="size picked">' + label +
+        '<div class="sizestep"><button data-dec="' + key + '" aria-label="One less ' + esc(it.name) + ' ' + esc(sec.sizeLabels[i]) + '">−</button>' +
+        '<span class="num">' + q + '</span>' +
+        '<button data-inc="' + key + '" aria-label="One more ' + esc(it.name) + ' ' + esc(sec.sizeLabels[i]) + '">+</button></div></div>'
+      : '<button class="size" data-inc="' + key + '">' + label + '</button>';
+  }).join("");
+  const anyQty = it.prices.some((p, i) => state.cart[it.id + ":" + i]);
+  return '<div class="row sizedrow' + (anyQty ? " incart" : "") + '"><div class="r-ico">' + icon(g) + '</div><div class="r-main">' +
+    '<div class="r-name">' + (hl ? mark(it.name, hl) : esc(it.name)) +
+    (it.qual ? '<span class="r-qual">(' + esc(it.qual) + ')</span>' : '') +
+    (it.tag ? '<span class="tag">' + esc(it.tag) + '</span>' : '') + '</div>' +
+    (it.descr ? '<div class="r-desc">' + (hl ? mark(it.descr, hl) : esc(it.descr)) + '</div>' : '') +
+    '<div class="sizes">' + chips +
+    (anyQty ? '<button class="size clearall" data-clearitem="' + it.id + '">Remove from order</button>' : '') +
+    '</div></div></div>';
+}
+
+function renderStatus(){
+  const o = state.myOrder;
+  if (o.status === "pending_payment") return renderAwaitingPayment(o);
+  const idx = STATUSES.indexOf(o.status);
+  const steps = ["Received","Preparing","Served"].map((s,i) =>
+    '<div class="track-step' + (i <= idx ? " done" : "") + '">' + s + '</div>').join("");
+  const rows = o.items.map(it =>
+    '<div class="line"><div class="line-name">' + esc(it.name) + '<small>' + it.qty + ' × ' + money(it.price) + '</small></div>' +
+    '<div class="line-amt num">' + money(it.price * it.qty) + '</div></div>').join("");
+  const head = o.status === "placed" ? "The kitchen has your order."
+             : o.status === "preparing" ? "Cooking now." : "Served — enjoy.";
+  const sub = o.status === "placed" ? "You'll see it move as the kitchen picks it up. No need to flag anyone down."
+            : o.status === "preparing" ? "Cold drinks usually land first, food follows."
+            : "Pay at the counter — cash or PhonePe.";
+  return '<div class="app"><header class="topbar"><div class="topbar-in"><div class="mark">' +
+    '<div class="logo goldtext">' + CAFE.code + ' ' + CAFE.name + ' ' + CAFE.kind + '</div>' +
+    '<div class="sub"><span class="place">' + esc(o.table) + ' · Order ' + esc(o.no) + '</span></div>' +
+    '</div></div><div class="hairline"></div></header>' +
+    '<div class="status-wrap"><div class="status-badge">' +
+      (o.status === "served" ? "" : '<span class="pulse"></span>') + STATUS_LABEL[o.status] + '</div>' +
+    '<h1 class="status-h">' + head + '</h1><p class="status-p">' + sub + '</p>' +
+    '<div class="track">' + steps + '</div>' +
+    '<div class="receipt"><h3>' + esc(o.table) + '</h3>' +
+      '<div class="rmeta">Order ' + esc(o.no) + ' · ' + agoPhrase(o.placedAt) + '</div>' + rows +
+      (o.note ? '<div class="t-note" style="margin:12px 0 0">Note: ' + esc(o.note) + '</div>' : '') +
+      '<div class="bill">' +
+        (GST.rate ? '<div><span>Subtotal</span><span class="num">' + money(o.subtotal) + '</span></div>' +
+                    '<div><span>GST</span><span class="num">' + money(o.gst) + '</span></div>' : '') +
+        '<div class="total"><span>Total</span><span class="num">' + money(o.total) + '</span></div></div></div>' +
+    '<button class="buzz-big' + (state.callPending ? " waiting" : "") + '" data-callserver>' +
+      BELL_ICON + (state.callPending ? "A server is on the way" : "Call a server") + '</button>' +
+    '<button class="btn ghost" data-addmore>Add something else</button></div>' +
+    '<footer class="foot"><a href="/">Back to the menu</a></footer></div>';
+}
+
+/* Shown when checkout was opened but not completed. The order exists, the
+   kitchen cannot see it, and nothing has been charged. */
+function renderAwaitingPayment(o){
+  const rows = o.items.map(it =>
+    '<div class="line"><div class="line-name">' + esc(it.name) + '<small>' + it.qty + ' × ' + money(it.price) + '</small></div>' +
+    '<div class="line-amt num">' + money(it.price * it.qty) + '</div></div>').join("");
+  return '<div class="app"><header class="topbar"><div class="topbar-in"><div class="mark">' +
+    '<div class="logo goldtext">' + CAFE.code + ' ' + CAFE.name + ' ' + CAFE.kind + '</div>' +
+    '<div class="sub"><span class="place">' + esc(o.table) + ' · Order ' + esc(o.no) + '</span></div>' +
+    '</div></div><div class="hairline"></div></header>' +
+    '<div class="status-wrap">' +
+    '<div class="status-badge" style="background:var(--amber-soft,rgba(247,159,61,.13));color:var(--amber)">' +
+      '<span class="pulse"></span>Not paid yet</div>' +
+    '<h1 class="status-h">Your order is waiting on payment.</h1>' +
+    '<p class="status-p">Nothing has been charged, and the kitchen has not started it. ' +
+    'Finish paying below, or ask a member of staff to take it at the counter.</p>' +
+    '<div class="receipt" style="margin-top:22px"><h3>' + esc(o.table) + '</h3>' +
+      '<div class="rmeta">Order ' + esc(o.no) + '</div>' + rows +
+      '<div class="bill"><div class="total"><span>Total</span><span class="num">' + money(o.total) + '</span></div></div>' +
+    '</div>' +
+    (state.pendingPay
+      ? '<button class="btn" data-retrypay' + (state.payBusy ? " disabled" : "") + '>' +
+        (state.payBusy ? "Opening…" : "Pay " + money(o.total)) + '</button>'
+      : '<p class="muted" style="text-align:center">Please pay at the counter — cash or PhonePe.</p>') +
+    '<button class="btn ghost" data-addmore>Back to the menu</button>' +
+    '</div></div>';
+}
+
+/* ============ KITCHEN ============ */
+function renderKitchen(){
+  if (!state.staff) return renderStaffLogin();
+  const list = state.orders;
+  const by = s => list.filter(o => o.status === s);
+  const col = (lbl, items, stripe) =>
+    '<div><div class="col-head">' + lbl + '<span class="col-count num">' + items.length + '</span></div>' +
+    '<div class="col-list">' + (items.length ? items.map(o => ticket(o, stripe)).join("") : '<div class="empty">Nothing here.</div>') + '</div></div>';
+  return '<div class="app wide"><div class="kit-top">' +
+    '<div class="kit-title goldtext">' + CAFE.code + ' ' + CAFE.name + ' — Kitchen</div>' +
+    '<div class="kit-stat"><b class="num">' + (by("placed").length + by("preparing").length) + '</b>open</div>' +
+    '<div class="kit-stat"><b class="num">' + money(list.reduce((a,o)=>a+(o.total||0),0)) + '</b>today</div>' +
+    soundChip() +
+    '<button class="chip" data-clear>Clear served</button>' +
+    '<button class="chip" data-goto="/admin">Menu editor</button>' +
+    '<button class="chip" data-goto="/qr">QR codes</button>' +
+    '<button class="chip" data-logout>Sign out</button></div>' +
+    callsStrip() +
+    '<div class="cols">' + col("New", by("placed"), "new") + col("Preparing", by("preparing"), "prep") +
+    col("Served", by("served"), "done") + '</div></div>';
+}
+function ticket(o, stripe){
+  const mins = Math.floor((Date.now() - new Date(o.placedAt).getTime()) / 60000);
+  const next = o.status === "placed" ? "preparing" : o.status === "preparing" ? "served" : null;
+  const lbl = o.status === "placed" ? "Start cooking" : o.status === "preparing" ? "Mark served" : null;
+  return '<article class="ticket' + (state.flashOrders.has(o.id) ? " justin" : "") + '">' +
+    '<div class="stripe ' + stripe + '"></div>' +
+    '<div class="ticket-top"><span class="t-table">' + esc(o.table) + '</span>' +
+    '<span class="t-no">' + esc(o.no) + '</span>' +
+    '<span class="t-age num' + (mins >= 12 && o.status !== "served" ? " late" : "") + '">' + ago(o.placedAt) + '</span></div>' +
+    (o.phone ? '<div style="padding:7px 14px 0;font-size:12px;color:var(--ink-2);letter-spacing:.04em">☎ +91 ' + esc(o.phone) + '</div>' : '') +
+    '<div class="ticket-items">' + o.items.map(i => '<div class="ti"><b class="num">' + i.qty + '×</b><span>' + esc(i.name) + '</span></div>').join("") + '</div>' +
+    (o.note ? '<div class="t-note">' + esc(o.note) + '</div>' : '') +
+    '<div class="ticket-foot">' +
+      (next ? '<button class="tbtn" data-next="' + o._id + '" data-status="' + next + '">' + lbl + '</button>'
+            : '<span style="flex:1;font-size:12px;color:var(--ink-3);align-self:center">Done · ' + money(o.total) + '</span>') +
+      (o.status === "preparing" ? '<button class="tbtn sec" data-next="' + o._id + '" data-status="placed">Back</button>' : '') +
+    '</div></article>';
+}
+
+
+function renderStaffLogin(){
+  return '<div class="app"><header class="topbar"><div class="topbar-in"><div class="mark">' +
+    '<div class="logo goldtext">' + CAFE.code + ' ' + CAFE.name + ' ' + CAFE.kind + '</div>' +
+    '<div class="sub"><span class="place">Staff only</span></div></div></div><div class="hairline"></div></header>' +
+    '<div class="sheet-body" style="padding:34px 22px"><h1 class="status-h" style="font-size:24px;margin-top:0">Staff sign in</h1>' +
+    '<p style="color:var(--ink-2);font-size:13.5px;margin:0">The kitchen board and the menu editor are behind this password.</p>' +
+    '<input id="staffpw" type="password" class="field" placeholder="Staff password" autocomplete="current-password" style="margin-top:18px">' +
+    (state.staffErr ? '<p class="muted" style="color:var(--crit)">' + esc(state.staffErr) + '</p>' : '') +
+    '<button class="btn" data-stafflogin>Sign in</button>' +
+    '<p class="muted" style="text-align:center"><a href="/" style="color:var(--gold)">Back to the menu</a></p></div></div>';
+}
+
+/* ============ ADMIN: ORDERS & HISTORY ============ */
+const RANGES = [["today","Today"],["week","7 days"],["month","30 days"],["all","All"]];
+const PAY_LABEL = { cash:"Cash", phonepe:"PhonePe" };
+
+async function loadHistory(more){
+  const offset = more ? (state.history?.orders.length || 0) : 0;
+  state.histLoading = true; if (!more) state.history = null;
+  render();
+  try {
+    const d = await api.get("/api/orders/history?" + new URLSearchParams({
+      range: state.histRange, q: state.histQ, limit: "60", offset: String(offset) }));
+    state.history = more && state.history
+      ? { ...d, orders: state.history.orders.concat(d.orders) }
+      : d;
+  } catch(e){ toast(e.message || "Could not load orders."); }
+  state.histLoading = false; render();
+}
+
+async function saveSplit(id){
+  const f = document.getElementById("splitcash");
+  if (!f) return;
+  const o = state.history?.orders.find(o => o.id === id);
+  const total = o ? o.total : Number(f.dataset.total);
+  const cash = Math.max(0, Math.min(total, Math.round(Number(f.value) || 0)));
+  const online = total - cash;
+  state.splitFor = null;
+  try {
+    await api.patch("/api/orders/" + id, { paidCash: cash, paidOnline: online });
+    toast(cash && online ? money(cash) + " cash + " + money(online) + " online"
+                         : cash ? "Cash " + money(cash) : "Online " + money(online));
+  } catch(e){ toast(e.message || "Could not save that."); }
+  loadHistory(false);
+}
+
+async function setPayment(id, mode){
+  const o = state.history?.orders.find(o => o.id === id);
+  const next = o && o.paymentMode === mode ? null : mode;   /* tapping the same one clears it */
+  if (o){ o.paymentMode = next; render(); }                 /* optimistic */
+  try { await api.patch("/api/orders/" + id, { paymentMode: next }); }
+  catch(e){ toast(e.message || "Could not save that."); }
+  loadHistory(false);
+}
+
+function whenText(iso){
+  const d = new Date(iso);
+  const t = d.toLocaleTimeString("en-IN", { hour:"numeric", minute:"2-digit", hour12:true });
+  const today = new Date().toDateString() === d.toDateString();
+  return today ? t : d.toLocaleDateString("en-IN", { day:"numeric", month:"short" }) + " · " + t;
+}
+
+function orderCard(o){
+  const items = o.items.map(i => i.qty + "× " + esc(i.name)).join(", ");
+  const abandoned = o.status === "pending_payment";
+  const paidOnline = o.paymentMode === "razorpay";
+  /* Nothing to record by hand for an order the gateway already settled, and
+     nothing to collect on one that was never paid for. */
+  const splitting = state.splitFor === o.id;
+  const pay = (abandoned || paidOnline) ? "" :
+    PAY_MODES_UI.map(m =>
+      '<button class="paybtn' + (o.paymentMode === m ? " on" : "") + '" data-pay="' + o.id + '" data-mode="' + m + '">' +
+      PAY_LABEL[m] + '</button>').join("") +
+    '<button class="paybtn' + (o.paymentMode === "split" ? " on" : "") + '" data-split="' + o.id + '">Split</button>';
+  const badge = abandoned
+    ? '<span class="pill awaiting">Not paid</span>'
+    : '<span class="pill ' + o.status + '">' + o.status + '</span>';
+  const settled = paidOnline ? '<span class="paid">✓ Paid online</span>'
+    : o.paymentMode === "split"
+      ? '<span class="paid">✓ ' + money(o.paidCash) + ' cash + ' + money(o.paidOnline) + ' online</span>'
+      : o.paymentMode ? '<span class="paid">✓ ' + PAY_LABEL[o.paymentMode] + '</span>' : '';
+  /* One field, not two: type what came in as cash and the rest is online.
+     At a counter that is the difference between usable and ignored. */
+  const splitRow = splitting
+    ? '<div class="splitrow"><label>Cash ' + CURRENCY +
+      '<input type="number" min="0" max="' + o.total + '" id="splitcash" data-total="' + o.total +
+      '" value="' + (o.paidCash || "") + '" inputmode="numeric" autocomplete="off"></label>' +
+      '<span class="splitrest" id="splitrest">' + money(Math.max(0, o.total - (o.paidCash || 0))) + ' online</span>' +
+      '<button class="paybtn on" data-savesplit="' + o.id + '">Save</button>' +
+      '<button class="paybtn" data-cancelsplit>Cancel</button></div>'
+    : "";
+  return '<article class="ord' + (abandoned ? " abandoned" : o.paymentMode ? "" : " due") + '">' +
+    '<div class="ord-top"><span class="ord-table">' + esc(o.table) + '</span>' +
+    '<span class="ord-no">' + esc(o.no) + '</span>' + badge +
+    '<span class="ord-when">' + whenText(o.placedAt) + '</span></div>' +
+    '<p class="ord-items">' + items + '</p>' +
+    (o.note ? '<p class="ord-phone">Note: ' + esc(o.note) + '</p>' : '') +
+    (o.phone ? '<p class="ord-phone">☎ +91 ' + esc(o.phone) + '</p>' : '') +
+    (abandoned ? '<p class="ord-phone">Checkout opened but never completed. Not counted in takings, and the kitchen never saw it.</p>' : '') +
+    '<div class="ord-foot"><span class="ord-total">' + money(o.total) + '</span>' +
+    settled + pay + '</div>' + splitRow + '</article>';
+}
+const PAY_MODES_UI = ["cash","phonepe"];
+
+function renderAdminOrders(){
+  const h = state.history;
+  const s = h?.summary;
+  const tiles = s ? '<div class="tiles">' +
+      '<div class="tile"><b class="num">' + s.orders + '</b><span>Orders</span></div>' +
+      '<div class="tile"><b class="num">' + money(s.takings) + '</b><span>Takings</span></div>' +
+      '<div class="tile"><b class="num">' + money(s.cash) + '</b><span>Cash</span></div>' +
+      '<div class="tile"><b class="num">' + money(s.phonepe) + '</b><span>PhonePe</span></div>' +
+      (Number(s.online) ? '<div class="tile"><b class="num">' + money(s.online) + '</b><span>Online</span></div>' : '') +
+      (Number(s.unpaid_count) ? '<div class="tile due"><b class="num">' + money(s.unpaid) + '</b>' +
+        '<span>Unrecorded · ' + s.unpaid_count + '</span></div>' : '') +
+      (Number(s.awaiting) ? '<div class="tile due"><b class="num">' + s.awaiting + '</b>' +
+        '<span>Not paid</span></div>' : '') +
+    '</div>' : '';
+
+  const filters = '<div class="filters">' +
+    RANGES.map(([id,label]) => '<button class="chip' + (state.histRange === id ? " on" : "") +
+      '" data-range="' + id + '">' + label + '</button>').join("") +
+    '<div class="searchbar">' + SEARCH_ICON +
+    '<input id="histq" type="text" placeholder="Table, phone or order no." value="' + esc(state.histQ) + '">' +
+    '</div></div>';
+
+  const body = state.histLoading && !h
+    ? '<div class="ordlist"><div class="empty">Loading…</div></div>'
+    : !h || !h.orders.length
+      ? '<div class="ordlist"><div class="empty">' +
+        (state.histQ ? 'No orders match “' + esc(state.histQ) + '”.' : 'No orders in this period yet.') +
+        '</div></div>'
+      : '<div class="ordlist">' + h.orders.map(orderCard).join("") + '</div>' +
+        (h.orders.length < Number(s.orders)
+          ? '<button class="more" data-more>Load more (' + (Number(s.orders) - h.orders.length) + ' older)</button>' : '');
+
+  return tiles + filters + body;
+}
+
+function renderAdmin(){
+  if (!state.staff) return renderStaffLogin();
+  if (state.adminTab === "orders"){
+    return '<div class="app wide"><header class="topbar"><div class="topbar-in"><div class="mark">' +
+      '<div class="logo goldtext">Orders</div>' +
+      '<div class="sub"><span class="place">Who ordered what, and how they paid</span></div></div>' +
+      soundChip() +
+      '<button class="chip" data-goto="/kitchen">Kitchen</button></div><div class="hairline"></div></header>' +
+      callsStrip() +
+      '<div class="tabs"><button class="tab on" data-tab="orders">Orders</button>' +
+      '<button class="tab" data-tab="menu">Menu &amp; prices</button></div>' +
+      renderAdminOrders() + '</div>';
+  }
+  const rows = MENU.map(sec =>
+    '<section class="sec" id="sec-' + sec.id + '"><div class="badge"><span>' + esc(sec.name) + '</span></div>' +
+    '<div class="items">' + sec.items.map(it => {
+      const sold = it.available === false;
+      const price = it.prices
+        ? it.prices.map((p, i) => '<input class="pxin num" data-item="' + it.id + '" data-size="' + i + '" type="number" min="0" value="' + (p ?? "") + '" aria-label="' + esc(it.name) + ' ' + ["small","medium","large"][i] + '">').join("")
+        : '<input class="pxin num" data-item="' + it.id + '" type="number" min="0" value="' + (it.price ?? "") + '" aria-label="' + esc(it.name) + ' price">';
+      return '<div class="row"><div class="r-main"><div class="r-name" style="font-size:14px' + (sold ? ";opacity:.45;text-decoration:line-through" : "") + '">' +
+        esc(it.name) + '</div></div><div class="pxwrap">' + price + '</div>' +
+        '<button class="chip' + (sold ? "" : " on") + '" data-avail="' + it.id + '" data-to="' + (sold ? "1" : "0") + '">' +
+        (sold ? "Sold out" : "On") + '</button></div>';
+    }).join("") + '</div></section>').join("");
+  return '<div class="app"><header class="topbar"><div class="topbar-in"><div class="mark">' +
+    '<div class="logo goldtext">Menu editor</div><div class="sub"><span class="place">Changes go live at once</span></div></div>' +
+    soundChip() +
+    '<button class="chip" data-goto="/kitchen">Kitchen</button></div><div class="hairline"></div></header>' +
+    '<div class="tabs"><button class="tab" data-tab="orders">Orders</button>' +
+    '<button class="tab on" data-tab="menu">Menu &amp; prices</button></div>' +
+    '<p class="hint" style="padding:16px 22px 0">Type a new price and click away to save it. "Sold out" hides a dish from customers without deleting it.</p>' +
+    rows + '<div style="height:80px"></div></div>';
+}
+
+/* ============ QR ============ */
+function renderQR(){
+  const base = location.origin;
+  let cards = "";
+  for (let i = 1; i <= state.qrTables; i++){
+    cards += '<div class="card"><div class="cn">' + CAFE.code + '<br>' + CAFE.name + ' ' + CAFE.kind + '</div>' +
+      /* ?t= not #t= — readRoute() reads location.search, so a hash is thrown
+         away and the table silently never gets set. */
+      '<div class="ct">Scan to order</div><div class="qbox" data-qr="' + esc(base) + '/?t=' + i + '"></div>' +
+      '<div class="cnum">Table ' + i + '</div><div class="cinst">Point your camera here</div></div>';
+  }
+  /* Codes are built from whatever address this page is open at. Opened via
+     localhost, every code points at the phone's own machine and scans to
+     nothing — so say so rather than let them be printed. */
+  const localOnly = /^(localhost|127\.0\.0\.1|\[::1\])$/i.test(location.hostname);
+  const warn = localOnly
+    ? '<div class="qrwarn"><b>These codes will not work on a phone.</b>' +
+      'You are viewing this page at <code>' + esc(location.host) + '</code>, so every code below points at ' +
+      '<code>localhost</code> — which on a phone means the phone itself. ' +
+      '<span id="qrhosts">Open this page using this computer’s network address instead.</span></div>'
+    : '';
+  return '<div class="app wide">' + warn + '<div class="qr-top"><h1 class="qr-h goldtext">Scan to order</h1>' +
+    '<p class="qr-p">One code for the whole cafe, plus a code per table. A table code fills the table number in automatically, so the kitchen always knows where an order goes.</p></div>' +
+    '<div class="master"><div class="qbig" id="masterqr" data-qrbig="' + esc(base) + '/"></div>' +
+      '<div class="master-txt"><h2 class="goldtext">' + CAFE.code + ' ' + CAFE.name + ' ' + CAFE.kind + '</h2>' +
+      '<p>The cafe code. Put it on the counter, the door, a standee or your Instagram — anyone who scans it lands on the menu and picks their table.</p>' +
+      '<div class="master-actions"><button class="chip" data-savepng>Save as PNG</button>' +
+      '<button class="chip" data-print>Print this page</button></div></div></div>' +
+    '<div class="qr-ctl"><label for="ntables">Tables</label><input id="ntables" type="number" min="1" max="40" value="' + state.qrTables + '">' +
+    '<button class="chip" data-print>Print sheet</button><button class="chip" data-goto="/">Menu</button>' +
+    '<button class="chip" data-goto="/kitchen">Kitchen</button></div>' +
+    '<div class="qr-grid" id="qrgrid">' + cards + '</div>' +
+    '<p class="hint">Codes point at this page’s own address, so they keep working every time the menu is updated.</p></div>';
+}
+function paintQR(){
+  const big = document.querySelector("[data-qrbig]");
+  if (big){
+    big.innerHTML = "";
+    const url = big.getAttribute("data-qrbig");
+    if (typeof QRCode === "undefined") big.innerHTML = '<code style="font-size:10px;word-break:break-all;color:#555">' + esc(url) + '</code>';
+    else new QRCode(big, { text:url, width:190, height:190, colorDark:"#111111", colorLight:"#ffffff", correctLevel: QRCode.CorrectLevel.M });
+  }
+  document.querySelectorAll("[data-qr]").forEach(box => {
+    box.innerHTML = "";
+    const url = box.getAttribute("data-qr");
+    if (typeof QRCode === "undefined"){
+      box.innerHTML = '<code style="font-size:9px;word-break:break-all;color:#555">' + esc(url) + '</code>'; return;
+    }
+    new QRCode(box, { text:url, width:142, height:142, colorDark:"#111111", colorLight:"#ffffff",
+      correctLevel: QRCode.CorrectLevel.M });
+  });
+}
+
+
+async function saveMasterPng(){
+  const cv = document.querySelector("#masterqr canvas");
+  if (!cv){ toast("QR code is still loading."); return; }
+  const pad = 64, size = 900;
+  const out = document.createElement("canvas");
+  out.width = size + pad * 2; out.height = size + pad * 2 + 96;
+  const g = out.getContext("2d");
+  g.fillStyle = "#ffffff"; g.fillRect(0, 0, out.width, out.height);
+  g.imageSmoothingEnabled = false;
+  g.drawImage(cv, pad, pad, size, size);
+  g.fillStyle = "#111111"; g.textAlign = "center";
+  g.font = "700 46px Saira, system-ui, sans-serif";
+  g.fillText(CAFE.code + " " + CAFE.name + " " + CAFE.kind, out.width / 2, size + pad + 62);
+  g.font = "500 30px Saira, system-ui, sans-serif"; g.fillStyle = "#666666";
+  g.fillText("Scan to see the menu & order", out.width / 2, size + pad + 104);
+  out.toBlob(blob => {
+    if (!blob){ toast("Could not build the image."); return; }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mystic-falls-qr.png";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }, "image/png");
+}
+
+/* ============ MOUNT ============ */
+function render(){
+  $("#root").innerHTML = state.view === "kitchen" ? renderKitchen()
+                       : state.view === "qr" ? renderQR()
+                       : state.view === "admin" ? renderAdmin() : renderMenu();
+  if (state.view === "qr"){
+    paintQR();
+    /* Fill the warning with the real addresses, which only the server knows. */
+    const slot = document.getElementById("qrhosts");
+    if (slot) api.get("/api/hosts").then(d => {
+      if (!d.hosts?.length) return;
+      slot.innerHTML = "Open this page at " + d.hosts
+        .map(h => '<code>http://' + h + ':' + d.port + '/qr</code>').join(" or ") +
+        " and the codes will be right.";
+    }).catch(() => {});
+  }
+  if (state.view === "menu") setupSpy();
+  measureSticky(); watchSticky();
+}
+
+/* The sticky header and the category rail feed the offsets used by anchor
+   jumps and the scroll-spy. These are measured rather than assumed: the
+   wordmark is a different height before the webfont arrives, and measuring
+   only once left a dead band under the header and made category taps land
+   past the section heading. */
+function measureSticky(){
+  const bar = document.querySelector(".topbar");
+  if (!bar) return;
+  const rail = document.querySelector(".rail");
+  const barH  = Math.round(bar.getBoundingClientRect().height);
+  const railH = rail ? Math.round(rail.getBoundingClientRect().height) : 0;
+  const css = document.documentElement.style;
+  css.setProperty("--railtop", barH + "px");
+  css.setProperty("--stickyh", (barH + railH + 10) + "px");
+}
+let stickyRO;
+function watchSticky(){
+  if (!window.ResizeObserver) return;
+  const targets = [document.querySelector(".topbar"), document.querySelector(".rail")].filter(Boolean);
+  if (!targets.length) return;
+  if (stickyRO) stickyRO.disconnect();
+  stickyRO = new ResizeObserver(measureSticky);
+  targets.forEach(t => stickyRO.observe(t));
+}
+addEventListener("resize", measureSticky);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureSticky);
+
+let spy;
+function setupSpy(){
+  if (spy) spy.disconnect();
+  const pills = [].slice.call(document.querySelectorAll(".cat-pill"));
+  if (!pills.length) return;
+  pills[0].classList.add("active");
+  spy = new IntersectionObserver(es => {
+    es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const id = en.target.id.replace("sec-","");
+      pills.forEach(p => p.classList.toggle("active", p.dataset.cat === id));
+      const on = document.querySelector(".cat-pill.active");
+      if (on) on.scrollIntoView({ inline:"center", block:"nearest", behavior:"smooth" });
+    });
+  }, { rootMargin:"-" + (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--stickyh"), 10) || 136) + "px 0px -70% 0px" });
+  document.querySelectorAll(".sec[id]").forEach(s => spy.observe(s));
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.inc){ state.cart[b.dataset.inc] = (state.cart[b.dataset.inc]||0) + 1; render(); return; }
+  if (b.dataset.dec){
+    const k = b.dataset.dec; state.cart[k] = Math.max(0,(state.cart[k]||0) - 1);
+    if (!state.cart[k]) delete state.cart[k]; render(); return;
+  }
+  if (b.dataset.clearitem){
+    Object.keys(state.cart).forEach(k => { if (k.split(":")[0] === b.dataset.clearitem) delete state.cart[k]; });
+    render(); return;
+  }
+  if (b.hasAttribute("data-opencart")) return openSheet("cart");
+  if (b.hasAttribute("data-search")) return openSheet("search");
+  if (b.hasAttribute("data-retrypay")) return openCheckout();
+  if (b.hasAttribute("data-callserver")) return callServer();
+  if (b.dataset.ack) return ackCall(Number(b.dataset.ack));
+  if (b.dataset.tab){
+    state.adminTab = b.dataset.tab;
+    if (state.adminTab === "orders" && !state.history) loadHistory(false); else render();
+    return;
+  }
+  if (b.dataset.range){ state.histRange = b.dataset.range; loadHistory(false); return; }
+  if (b.dataset.pay) return setPayment(Number(b.dataset.pay), b.dataset.mode);
+  if (b.dataset.split){
+    state.splitFor = Number(b.dataset.split); render();
+    const f = document.getElementById("splitcash"); if (f){ f.focus(); f.select(); }
+    return;
+  }
+  if (b.dataset.savesplit) return saveSplit(Number(b.dataset.savesplit));
+  if (b.hasAttribute("data-cancelsplit")){ state.splitFor = null; render(); return; }
+  if (b.hasAttribute("data-more")) return loadHistory(true);
+  if (b.hasAttribute("data-changenum")) return changeNumber();
+  if (b.hasAttribute("data-picktable")) return openSheet("table");
+  if (b.hasAttribute("data-addmore")){ state.myOrder = null; state.myOrderId = null; wire(); render(); return; }
+  if (b.hasAttribute("data-sound")) return toggleSound();
+  if (b.hasAttribute("data-sound-unlock")){
+    /* This click is itself the gesture the browser was waiting for. */
+    if (previewSound()) toast("Sound enabled"); else toast("This device is blocking sound.");
+    render(); return;
+  }
+  if (b.hasAttribute("data-clear")) return clearServed();
+  if (b.hasAttribute("data-print")) return window.print();
+  if (b.hasAttribute("data-savepng")) return saveMasterPng();
+  if (b.dataset.avail){
+    const id = b.dataset.avail, to = b.dataset.to === "1";
+    api.patch("/api/menu/item/" + id, { available: to }).then(() => {
+      const it = MENU.flatMap(s => s.items).find(i => i.id === id);
+      if (it) it.available = to;
+      rebuildCatalogue(); render();
+    }).catch(err => toast(err.message || "Could not change that."));
+    return;
+  }
+  if (b.dataset.goto !== undefined) return go(b.dataset.goto || "/");
+  if (b.hasAttribute("data-logout")){ api.post("/api/staff/logout").finally(() => { state.staff = false; render(); }); return; }
+  if (b.hasAttribute("data-stafflogin")){ const f = document.getElementById("staffpw"); return staffLogin(f ? f.value : ""); }
+  if (b.dataset.next) return setStatus(b.dataset.next, b.dataset.status);
+  if (b.dataset.cat){ const el = document.getElementById("sec-" + b.dataset.cat); if (el) el.scrollIntoView({ behavior:"smooth", block:"start" }); return; }
+});
+document.addEventListener("change", async e => {
+  const f = e.target.closest(".pxin"); if (!f) return;
+  const id = f.dataset.item;
+  const item = MENU.flatMap(s => s.items).find(i => i.id === id);
+  if (!item) return;
+  try {
+    if (f.dataset.size !== undefined){
+      const fields = [].slice.call(document.querySelectorAll('.pxin[data-item="' + id + '"]'));
+      const prices = fields.map(x => x.value === "" ? null : Number(x.value));
+      await api.patch("/api/menu/item/" + id, { prices });
+      item.prices = prices;
+    } else {
+      await api.patch("/api/menu/item/" + id, { price: Number(f.value) });
+      item.price = Number(f.value);
+    }
+    rebuildCatalogue();
+    f.classList.add("saved"); setTimeout(() => f.classList.remove("saved"), 1200);
+  } catch(err){ toast(err.message || "Could not save that price."); }
+});
+/* The history search refetches from the server, so it is debounced and the
+   caret is put back afterwards -- render() replaces the whole subtree. */
+let histTimer;
+document.addEventListener("input", e => {
+  /* Live remainder as the cash figure is typed, so nobody does the sum. */
+  if (e.target.id === "splitcash"){
+    const total = Number(e.target.dataset.total) || 0;
+    const cash = Math.max(0, Math.min(total, Math.round(Number(e.target.value) || 0)));
+    const rest = document.getElementById("splitrest");
+    if (rest) rest.textContent = money(total - cash) + " online";
+    return;
+  }
+  if (e.target.id === "histq"){
+    state.histQ = e.target.value;
+    clearTimeout(histTimer);
+    histTimer = setTimeout(() => {
+      loadHistory(false);
+      const f = document.getElementById("histq");
+      if (f){ f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
+    }, 350);
+    return;
+  }
+  if (e.target.id === "ntables"){
+    const v = Math.max(1, Math.min(40, parseInt(e.target.value || "1", 10)));
+    state.qrTables = v; render();
+    const f = document.getElementById("ntables"); if (f){ f.focus(); f.value = v; }
+  }
+});
+setInterval(() => { if (state.view === "kitchen" && state.staff) render(); }, 20000);
+
+/* ============ TYPEFACES ============
+   Only the default pair ships in the initial <link>. Picking another injects
+   that stylesheet on demand, so nobody downloads five fonts they never see.
+   Every face has a real fallback, because cafe wifi does drop Google Fonts. */
+const FONTS = [
+  { id:"",         name:"Chakra Petch + Saira", note:"current — squared, technical",
+    display:'"Chakra Petch",Impact,"Arial Narrow",sans-serif',
+    body:'"Saira",system-ui,-apple-system,"Segoe UI",sans-serif', url:null },
+  { id:"oswald",   name:"Oswald + Karla", note:"condensed menu-board",
+    display:'"Oswald",Impact,"Arial Narrow",sans-serif',
+    body:'"Karla",system-ui,-apple-system,"Segoe UI",sans-serif',
+    url:"Oswald:wght@500;600;700&family=Karla:wght@400;500;600;700" },
+  { id:"playfair", name:"Playfair Display + Lato", note:"classic bistro",
+    display:'"Playfair Display",Georgia,"Times New Roman",serif',
+    body:'"Lato",system-ui,-apple-system,"Segoe UI",sans-serif',
+    url:"Playfair+Display:wght@600;700;800&family=Lato:wght@400;700;900" },
+  { id:"anton",    name:"Anton + Barlow", note:"bold poster",
+    display:'"Anton",Impact,"Arial Narrow",sans-serif',
+    body:'"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif',
+    url:"Anton&family=Barlow:wght@400;500;600;700" },
+  { id:"fraunces", name:"Fraunces + Nunito Sans", note:"warm and characterful",
+    display:'"Fraunces",Georgia,"Times New Roman",serif',
+    body:'"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif',
+    url:"Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700" },
+  { id:"archivo",  name:"Archivo Black + Archivo", note:"heavy modern grotesque",
+    display:'"Archivo Black",Impact,"Arial Narrow",sans-serif',
+    body:'"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif',
+    url:"Archivo+Black&family=Archivo:wght@400;500;600;700" },
+];
+function applyFont(id){
+  const f = FONTS.find(x => x.id === id) || FONTS[0];
+  if (f.url && !document.getElementById("font-" + f.id)){
+    const l = document.createElement("link");
+    l.id = "font-" + f.id; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=" + f.url + "&display=swap";
+    document.head.appendChild(l);
+  }
+  const css = document.documentElement.style;
+  css.setProperty("--display", f.display);
+  css.setProperty("--body", f.body);
+  try { localStorage.setItem("mf_font", f.id); } catch(e){}
+  /* the sticky offsets depend on the wordmark's height, which just changed */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureSticky);
+  return f.id;
+}
+
+/* ============ PALETTES ============
+   Swapping a theme is only a change of CSS variables — no markup or logic
+   depends on any particular colour. Pick one with ?theme=<id>; the choice
+   sticks in localStorage. ?themes=1 shows the picker for comparing them. */
+const THEMES = [
+  { id:"",       name:"Midnight Gold",  sw:["#1A1918","#E3B24A","#F79F3D"] },
+  { id:"ivory",  name:"Ivory & Gold",   sw:["#F7F2E8","#8C6110","#D9822B"] },
+  { id:"plum",   name:"Plum & Rose",    sw:["#191022","#E3A695","#E4718D"] },
+  { id:"forest", name:"Forest & Brass", sw:["#121A15","#C9A227","#D68B2A"] },
+  { id:"ember",  name:"Charcoal Ember", sw:["#131211","#FF9E2C","#FF5F4D"] },
+  { id:"indigo", name:"Indigo & Ice",   sw:["#101623","#6CC9E2","#F0A868"] },
+];
+function applyTheme(id){
+  const t = THEMES.find(x => x.id === id) || THEMES[0];
+  if (t.id) document.documentElement.setAttribute("data-theme", t.id);
+  else document.documentElement.removeAttribute("data-theme");
+  try { localStorage.setItem("mf_theme", t.id); } catch(e){}
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", t.sw[0]);   /* phone browser chrome follows along */
+  return t.id;
+}
+/* Whatever was chosen last time, applied before anything is drawn. */
+(function(){
+  const q = new URLSearchParams(location.search).get("font");
+  let saved = null; try { saved = localStorage.getItem("mf_font"); } catch(e){}
+  const id = q !== null ? q : (saved || "");
+  if (id) applyFont(id);
+})();
+
+if (new URLSearchParams(location.search).has("themes")){
+  const curTheme = document.documentElement.getAttribute("data-theme") || "";
+  let curFont = ""; try { curFont = localStorage.getItem("mf_font") || ""; } catch(e){}
+  const qf = new URLSearchParams(location.search).get("font");
+  if (qf !== null) curFont = qf;
+
+  const bar = document.createElement("div");
+  bar.className = "themebar";
+  bar.innerHTML =
+    '<div class="tbrow"><span class="tblabel">Palette</span>' +
+    THEMES.map(t => '<button data-pick="' + t.id + '"' + (t.id === curTheme ? ' class="on"' : '') + '>' +
+      '<span class="sw">' + t.sw.map(c => '<i style="background:' + c + '"></i>').join("") + '</span>' +
+      t.name + '</button>').join("") + '</div>' +
+    '<div class="tbrow"><span class="tblabel">Type</span>' +
+    FONTS.map(f => '<button data-font="' + f.id + '"' + (f.id === curFont ? ' class="on"' : '') + '>' +
+      f.name + '</button>').join("") + '</div>';
+  document.body.appendChild(bar);
+
+  bar.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    e.stopPropagation();
+    if (b.dataset.pick !== undefined){
+      const now = applyTheme(b.dataset.pick);
+      bar.querySelectorAll("[data-pick]").forEach(x => x.classList.toggle("on", x.dataset.pick === now));
+    } else if (b.dataset.font !== undefined){
+      const now = applyFont(b.dataset.font);
+      bar.querySelectorAll("[data-font]").forEach(x => x.classList.toggle("on", x.dataset.font === now));
+    }
+  });
+}
+
+/* ============ THE FALLS ============
+   Slow drifting haze behind the page. Canvas rather than images: nothing to
+   download, and it costs a few hundred bytes of code. Blurred blobs at a low
+   frame rate — this must never compete with scrolling on a cheap phone. */
+(function mist(){
+  const c = document.getElementById("mist");
+  if (!c || !c.getContext) return;
+  const ctx = c.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w = 0, h = 0, blobs = [], raf = 0, last = 0;
+
+  function size(){
+    w = c.width  = Math.round(innerWidth  * .5);   /* half res: it is a blur, nobody can tell */
+    h = c.height = Math.round(innerHeight * .5);
+    c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
+    const n = innerWidth < 600 ? 5 : 8;
+    blobs = Array.from({ length: n }, (_, i) => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: (70 + Math.random() * 130) * (w / 700 + .5),
+      vy: .06 + Math.random() * .16,                /* everything drifts down. it is a falls. */
+      vx: (Math.random() - .5) * .07,
+      a: .05 + Math.random() * .07,
+      warm: i % 3 === 0,
+    }));
+  }
+  /* Painting is separate from animating, so the haze is present even when
+     nothing is driving it: reduced-motion, a throttled background tab, or a
+     browser that never schedules the frame. Motion is the enhancement. */
+  function paint(advance){
+    ctx.clearRect(0, 0, w, h);
+    for (const b of blobs){
+      if (advance){
+        b.y += b.vy; b.x += b.vx;
+        if (b.y - b.r > h){ b.y = -b.r; b.x = Math.random() * w; }
+        if (b.x < -b.r) b.x = w + b.r; else if (b.x > w + b.r) b.x = -b.r;
+      }
+      const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+      const rgb = b.warm ? "229,190,99" : "143,183,201";
+      g.addColorStop(0, `rgba(${rgb},${b.a})`);
+      g.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  function frame(t){
+    raf = requestAnimationFrame(frame);
+    if (t - last < 55) return;                      /* ~18fps is plenty for fog */
+    last = t;
+    paint(true);
+  }
+  function start(){ if (!raf && !still){ last = 0; raf = requestAnimationFrame(frame); } }
+  function stop(){ if (raf){ cancelAnimationFrame(raf); raf = 0; } }
+
+  addEventListener("resize", () => { size(); paint(false); if (!still) { stop(); start(); } },
+                   { passive: true });
+  document.addEventListener("visibilitychange", () => {   /* no work in a background tab */
+    if (document.hidden) stop(); else { paint(false); start(); }
+  });
+  size();
+  paint(false);                                     /* one frame up front, always */
+  if (!document.hidden) start();
+})();
+
+/* The first touch anywhere is what lets audio play later, so take it: by the
+   time the first order lands the chime is already allowed. */
+["pointerdown", "keydown"].forEach(ev =>
+  document.addEventListener(ev, () => audioReady(), { once: true, capture: true }));
+
+readRoute(); render(); boot();
+</script>
+</body>
+</html>
