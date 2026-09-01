@@ -6,6 +6,7 @@ import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { db } from "./db.js";
+import { ensureSchema } from "./setup-db.js";
 import { CAFE } from "./menu-data.js";
 import { sendOtpSms, smsMode } from "./sms.js";
 
@@ -681,4 +682,21 @@ app.listen(PORT, () => {
   console.log(`  SMS mode ${smsMode()}${smsMode() === "demo" ? "  (codes shown on screen, no texts sent)" : ""}`);
   if (!STAFF_PASSWORD) console.log(`  ! STAFF_PASSWORD is not set — /kitchen and /admin are locked out.`);
   console.log("");
+
+  /* Bring the database up to date on its own. Deploying is then the whole
+     job — there is no separate "run the setup script against production"
+     step to forget, and forgetting it leaves a live site serving 500s.
+     Runs after listen(), so the port is open immediately and a host's health
+     check does not time out waiting for the menu to load.
+     Seeds only when the items table is empty, so prices edited in /admin
+     survive every redeploy. */
+  ensureSchema({ log: m => console.log(`  db: ${m}`), seed: "if-empty" })
+    .then(() => console.log("  db: ready\n"))
+    .catch(e => {
+      console.error(`\n  ! database setup failed: ${e.message}`);
+      console.error(`  ! the menu and ordering will not work until this is fixed.`);
+      console.error(/auth|401|unauthor/i.test(e.message)
+        ? `  ! the token was rejected — check TURSO_AUTH_TOKEN.\n`
+        : `  ! check TURSO_DATABASE_URL and that the database exists.\n`);
+    });
 });
