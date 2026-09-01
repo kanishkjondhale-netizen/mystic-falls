@@ -230,6 +230,26 @@ function verifiedPhone(req) {
   const expect = crypto.createHmac("sha256", SESSION_SECRET).update("phone:" + phone).digest("hex");
   return tok === expect ? phone : null;
 }
+/* Without a verified phone, "is this your order?" needs another answer. The
+   browser that placed an order gets a signed list of its own order ids, so it
+   can follow its own status and nobody else's. */
+const ordersTokenFor = ids =>
+  crypto.createHmac("sha256", SESSION_SECRET).update("orders:" + ids.join(",")).digest("hex");
+
+function ownedOrderIds(req) {
+  const raw = req.cookies?.mf_mine, tok = req.cookies?.mf_minetok;
+  if (!raw || !tok) return [];
+  const ids = raw.split(",").filter(Boolean);
+  return ordersTokenFor(ids) === tok ? ids : [];
+}
+function rememberOrder(req, res, id) {
+  const ids = [...new Set([...ownedOrderIds(req), String(id)])].slice(-25);  /* a night's worth */
+  const opts = { sameSite: "lax", maxAge: 30 * 24 * 3600 * 1000,
+                 secure: req.secure || req.headers["x-forwarded-proto"] === "https" };
+  res.cookie("mf_mine", ids.join(","), opts);
+  res.cookie("mf_minetok", ordersTokenFor(ids), { ...opts, httpOnly: true });
+}
+
 app.get("/api/me", (req, res) => res.json({ phone: verifiedPhone(req) }));
 
 /* ----------------------------------------------------------------- orders */
@@ -244,6 +264,7 @@ const rowToOrder = r => ({
 const PAY_MODES = ["cash", "phonepe"];
 
 async function bumpCustomer(phone, total, whenIso) {
+  if (!phone) return;          /* the regulars list is keyed on the number */
   await db.execute({
     sql: `INSERT INTO customers (phone, first_seen, last_seen, orders_count, total_spend)
           VALUES (?, ?, ?, 1, ?)
@@ -254,11 +275,21 @@ async function bumpCustomer(phone, total, whenIso) {
 }
 
 app.post("/api/orders", async (req, res) => {
-  const phone = verifiedPhone(req);
-  if (!phone) return bad(res, "Verify your mobile number first.", 401);
-  if (!rateLimit("order:" + phone, 12, 10 * 60_000)) return bad(res, "That is a lot of orders in a row. Please call a server.", 429);
+  /* A number is useful, not compulsory. The customer is sitting at a numbered
+     table in the room — that, not a verified phone, is the accountability.
+     A verified number (if OTP is ever switched back on) still wins over one
+     that was merely typed. */
+  const verified = verifiedPhone(req);
+  const typed = String(req.body?.phone || "").replace(/\D/g, "").slice(0, 10);
+  const phone = verified || (/^[6-9]\d{9}$/.test(typed) ? typed : "");
+  if (typed && !phone) return bad(res, "That mobile number does not look right. Leave it blank to skip.");
 
   const table = String(req.body?.table || "").slice(0, 40);
+  /* Without a phone to key on, the table is the next best handle, and the
+     connection behind it the one after that. */
+  const limitKey = phone ? "order:" + phone : "ordertable:" + table + ":" + req.ip;
+  if (!rateLimit(limitKey, 12, 10 * 60_000))
+    return bad(res, "That is a lot of orders in a row. Please call a server.", 429);
   const lines = Array.isArray(req.body?.items) ? req.body.items : [];
   const note = String(req.body?.note || "").slice(0, 400);
   if (!table) return bad(res, "Pick your table first.");
@@ -324,9 +355,12 @@ app.post("/api/orders", async (req, res) => {
       args: [orderNo, table, phone, JSON.stringify(priced), subtotal, gst, total, note,
              status, placedAt, placedAt, payStatus, rzp?.id || null],
     });
+    rememberOrder(req, res, Number(ins.lastInsertRowid));
     /* An abandoned checkout should not inflate anyone's spend, so online
-       orders only join the customer record once payment clears. */
-    if (!wantsOnline) await bumpCustomer(phone, total, placedAt);
+       orders only join the customer record once payment clears. And with no
+       phone there is nobody to credit — the repeat-customer list is keyed on
+       the number. */
+    if (!wantsOnline && phone) await bumpCustomer(phone, total, placedAt);
 
     res.json({ ok: true,
       order: { id: Number(ins.lastInsertRowid), no: orderNo, table, phone, items: priced,
@@ -535,7 +569,11 @@ app.get("/api/orders/:id", async (req, res) => {
     const { rows } = await db.execute({ sql: "SELECT * FROM orders WHERE id = ?", args: [req.params.id] });
     if (!rows.length) return bad(res, "Order not found.", 404);
     const o = rowToOrder(rows[0]);
-    if (!isStaff(req)) { const p = verifiedPhone(req); if (!p || o.phone !== p) return bad(res, "Not your order.", 403); }
+    if (!isStaff(req)) {
+      const p = verifiedPhone(req);
+      const mine = ownedOrderIds(req).includes(String(o.id));
+      if (!mine && !(p && o.phone === p)) return bad(res, "Not your order.", 403);
+    }
     res.json({ order: o });
   } catch (e) { console.error(e); bad(res, "Could not load that order.", 500); }
 });

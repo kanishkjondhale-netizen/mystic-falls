@@ -1124,6 +1124,8 @@ async function loadMenu(){
 }
 
 async function boot(){
+  /* Whatever they typed last time, so a regular does not retype it. */
+  try { state.phone = localStorage.getItem("mf_num") || ""; } catch(e){}
   try { const me = await api.get("/api/me"); if (me.phone){ state.phone = me.phone; state.phoneVerified = true; } } catch(e){}
   try { const s = await api.get("/api/staff/me"); state.staff = !!s.staff; } catch(e){}
   await loadMenu();
@@ -1132,15 +1134,18 @@ async function boot(){
 
 async function placeOrder(payMode){
   const lines = cartLines(); if (!lines.length) return;
-  if (!state.phoneVerified){ state.pendingPayMode = payMode; openSheet("phone"); return; }
+  /* No verification gate. The number is optional and travels with the order;
+     an invalid one is refused by the server with a readable message. */
   const table = state.table === "takeaway" ? "Takeaway" : "Table " + state.table;
   closeSheet();
   try {
     const d = await api.post("/api/orders", {
       table, note: state.note.trim(),
       items: lines.map(l => ({ key:l.key, qty:l.qty })),
+      phone: state.phone.replace(/\D/g, ""),
       payMode: payMode || "counter"
     });
+    try { localStorage.setItem("mf_num", state.phone); } catch(e){}   /* saves retyping next visit */
     state.myOrderId = d.order.id; state.myOrder = d.order;
     state.cart = {}; state.note = "";
     if (d.razorpay){ state.pendingPay = d.razorpay; wire(); render(); return openCheckout(); }
@@ -1465,6 +1470,13 @@ function renderSheet(){
     '<button class="x" data-close aria-label="Close">✕</button></div>' +
     '<div class="sheet-body">' + rows +
     '<textarea class="field" id="note" placeholder="Anything for the kitchen? Less spicy, extra cheese, no onion…">' + esc(state.note) + '</textarea>' +
+    /* Optional on purpose: it is so the kitchen can call, not to prove who
+       you are. Saying "optional" out loud stops people abandoning here. */
+    '<div class="phone-field"><span class="cc">+91</span>' +
+    '<input id="cartphone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" ' +
+    'placeholder="Mobile number (optional)" value="' + esc(state.phone) + '"></div>' +
+    '<p class="muted" style="margin-top:7px">Only so we can call you if something runs out. ' +
+    'Leave it blank if you would rather not.</p>' +
     '<div class="bill">' +
       (GST.rate ? '<div><span>Subtotal</span><span class="num">' + money(t.sub) + '</span></div>' +
                   '<div><span>GST ' + Math.round(GST.rate*100) + '%</span><span class="num">' + money(t.gst) + '</span></div>' : '') +
@@ -1474,13 +1486,12 @@ function renderSheet(){
       : state.onlinePay
         ? '<button class="btn" data-place="online">Pay now · ' + money(t.total) + '</button>' +
           '<button class="btn ghost" data-place="counter">' + ORDER_CTA + ', pay at the counter</button>'
-        : '<button class="btn" data-place="counter">' +
-          (state.phoneVerified ? ORDER_CTA + " · " + money(t.total) : "Continue · " + money(t.total)) +
-          '</button>') +
+        /* "Continue" belonged to the old OTP step. There is no next step now —
+           this button sends the order. */
+        : '<button class="btn" data-place="counter">' + ORDER_CTA + " · " + money(t.total) + '</button>') +
     (state.phoneVerified
-      ? '<p style="text-align:center;margin:12px 0 2px"><span class="verified">✓ +91 ' + esc(state.phone) + '</span>' +
-        ' <button class="linkbtn" data-changenum style="margin-left:6px">change</button></p>'
-      : '<p class="muted" style="text-align:center">You\'ll verify your mobile number on the next step.</p>') +
+      ? '<p style="text-align:center;margin:12px 0 2px"><span class="verified">✓ +91 ' + esc(state.phone) + '</span></p>'
+      : '') +
     '<p style="text-align:center;font-size:12px;color:var(--ink-3);margin:8px 0 2px">' +
     'Pay at the counter — cash or PhonePe.</p></div>';
 }
@@ -1492,7 +1503,7 @@ $("#sheet").addEventListener("input", e => {
     if (c) c.style.display = state.q ? "block" : "none";
     renderSearchResults();          /* only the results redraw, so focus and caret survive */
   }
-  if (e.target.id === "phone"){
+  if (e.target.id === "phone" || e.target.id === "cartphone"){
     e.target.value = e.target.value.replace(/\D/g, "").slice(0,10);
     state.phone = e.target.value;
   }
